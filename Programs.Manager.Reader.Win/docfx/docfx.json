@@ -1,0 +1,54 @@
+{
+  "metadata": [
+    {
+      "outputFormat": "markdown",
+      "namespaceLayout": "nested",
+      "memberLayout": "separatePages",
+      "EnumSortOrder": "declaringOrder",
+      "src": [
+        {
+          "src": "../../",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern",
+      "templates/singulinkfx"
+    ],
+    "globalMetadata": {
+      "homepage": "docs/introduction.md",
+      "_appName": "Windows-Programs-Reader",
+      "_appTitle": "Windows-Programs-Reader",
+      "_appLogoPath": "images/logo-x64.png",
+      "_appFaviconPath": "images/favicon.ico",
+      "_appFooter": "<strong>Made with DocFX</strong>",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}
