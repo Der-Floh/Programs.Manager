@@ -32,7 +32,7 @@ jobs:
         dotnet-version: 7.x
 
     - run: dotnet tool update -g docfx
-    - run: docfx Programs.Manager.Reader.Win/docfx/docfx.json
+    - run: docfx Programs.Manager/Programs.Manager.Reader.Win/docfx/docfx.json
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
