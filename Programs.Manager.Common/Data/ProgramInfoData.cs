@@ -1,10 +1,10 @@
-﻿using Programs.Manager.Reader.Win.Service.ProgramInfo;
+﻿using Programs.Manager.Common.Service.ProgramInfo;
 using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Programs.Manager.Reader.Win.Data;
+namespace Programs.Manager.Common.Data;
 
 /// <summary>
 /// Contains information about a program.
@@ -36,6 +36,12 @@ public class ProgramInfoData : INotifyPropertyChanged
     private Bitmap? _displayIcon;
 
     /// <summary>
+    /// Path to the icon representing the program, if available.
+    /// </summary>
+    public string? DisplayIconPath { get => _displayIconPath; set { if (_displayIconPath == value) return; _displayIconPath = value; OnPropertyChanged(); } }
+    private string? _displayIconPath;
+
+    /// <summary>
     /// Display name of the program as registered in the system.
     /// </summary>
     public string? DisplayName { get => _displayName; set { if (_displayName == value) return; _displayName = value; OnPropertyChanged(); } }
@@ -51,7 +57,7 @@ public class ProgramInfoData : INotifyPropertyChanged
     /// Estimated size of the program on disk, in bytes.
     /// </summary>
     public long EstimatedSize { get => _estimatedSize; set { if (_estimatedSize == value) return; _estimatedSize = value; OnPropertyChanged(); } }
-    private long _estimatedSize;
+    private long _estimatedSize = -1;
 
     /// <summary>
     /// Link to the help documentation or website for the program, if available.
@@ -159,13 +165,13 @@ public class ProgramInfoData : INotifyPropertyChanged
     /// Major version number of the program.
     /// </summary>
     public long VersionMajor { get => _versionMajor; set { if (_versionMajor == value) return; _versionMajor = value; OnPropertyChanged(); } }
-    private long _versionMajor;
+    private long _versionMajor = -1;
 
     /// <summary>
     /// Minor version number of the program.
     /// </summary>
     public long VersionMinor { get => _versionMinor; set { if (_versionMinor == value) return; _versionMinor = value; OnPropertyChanged(); } }
-    private long _versionMinor;
+    private long _versionMinor = -1;
 
     /// <summary>
     /// Indicates whether the program was installed using Windows Installer.
@@ -193,11 +199,6 @@ public class ProgramInfoData : INotifyPropertyChanged
     public ProgramInfoData(IProgramInfoService programInfoService) => _programInfoService = programInfoService;
 
     /// <summary>
-    /// Initializes a new instance of the ProgramInfoData class.
-    /// </summary>
-    public ProgramInfoData() => _programInfoService = new ProgramInfoService();
-
-    /// <summary>
     /// Updates the current instance with information from another ProgramInfoData instance.
     /// </summary>
     /// <param name="programInfoData">The ProgramInfoData instance to update from.</param>
@@ -220,6 +221,11 @@ public class ProgramInfoData : INotifyPropertyChanged
     /// </summary>
     /// <returns>A task that returns true if the registry is successfully opened.</returns>
     public async Task<bool> OpenRegistry() => await _programInfoService.OpenRegistry(this);
+
+    /// <summary>
+    /// Fetches fallback values for the program.
+    /// </summary>
+    public void FetchFallbackProperties() => _programInfoService.FetchFallbackProperties(this);
 
     public override bool Equals(object? obj)
     {

@@ -1,4 +1,4 @@
-﻿namespace Programs.Manager.Reader.Win.Service.RegJump;
+﻿namespace Programs.Manager.Common.Service.RegJump;
 
 /// <summary>
 /// Provides a wrapper for interacting with the RegJump utility to jump to specific registry keys.

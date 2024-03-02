@@ -1,6 +1,6 @@
-﻿using Programs.Manager.Reader.Win.Data;
+﻿using Programs.Manager.Common.Data;
 
-namespace Programs.Manager.Reader.Win.Service.ProgramInfo;
+namespace Programs.Manager.Common.Service.ProgramInfo;
 
 /// <summary>
 /// Service for managing operations related to program information.
@@ -36,4 +36,10 @@ public interface IProgramInfoService
     /// <param name="programInfoData">The object to be updated.</param>
     /// <param name="programInfoDataToCopy">The source object from which to copy properties.</param>
     void UpdateFromDifferent(ProgramInfoData programInfoData, ProgramInfoData programInfoDataToCopy);
+
+    /// <summary>
+    /// Fetches fallback properties for a <see cref="ProgramInfoData"/> object.
+    /// </summary>
+    /// <param name="programInfoData"></param>
+    void FetchFallbackProperties(ProgramInfoData programInfoData);
 }

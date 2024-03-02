@@ -1,9 +1,10 @@
 ﻿using Microsoft.Win32;
-using Programs.Manager.Reader.Win.Service.EmbeddedResource;
+using Programs.Manager.Common.Service.EmbeddedResource;
+using Programs.Manager.Common.Service.RegJump;
 using Programs.Manager.Reader.Win.Utility;
 using System.Diagnostics;
 
-namespace Programs.Manager.Reader.Win.Service.RegJump;
+namespace Programs.Manager.Reader.Win.Service;
 
 ///<inheritdoc cref="IRegJumpService"/>
 public sealed class RegJumpService : IRegJumpService

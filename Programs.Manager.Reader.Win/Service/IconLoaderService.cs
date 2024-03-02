@@ -1,21 +1,22 @@
-﻿using Icon.Reader;
-using Programs.Manager.Reader.Win.Data;
+﻿using Ico.Reader;
+using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Service.IconLoader;
 using Programs.Manager.Reader.Win.Extensions;
 using System.Drawing;
 
-namespace Programs.Manager.Reader.Win.Service.IconLoader;
+namespace Programs.Manager.Reader.Win.Service;
 
 ///<inheritdoc cref="IIconLoaderService"/>
 public sealed class IconLoaderService : IIconLoaderService
 {
-    private readonly IconReader _iconReader;
+    private readonly IcoReader _iconReader;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IconLoaderService"/> class.
     /// </summary>
     public IconLoaderService()
     {
-        _iconReader = new IconReader();
+        _iconReader = new IcoReader();
     }
 
     public Bitmap? GetIcon(ProgramRegInfoData programRegInfoData)
@@ -171,7 +172,7 @@ public sealed class IconLoaderService : IIconLoaderService
         byte[]? iconBytes = null;
         if (iconIndex is not null)
         {
-            if (iconIndex.Index >= 0 && iconIndex.Index < iconData?.Images.Count)
+            if (iconIndex.Index >= 0 && iconIndex.Index < iconData?.ImageReferences.Count)
             {
                 iconBytes = iconData?.GetImage(iconIndex.Index);
             }

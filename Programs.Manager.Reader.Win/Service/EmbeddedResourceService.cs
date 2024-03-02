@@ -1,6 +1,7 @@
-﻿using System.Reflection;
+﻿using Programs.Manager.Common.Service.EmbeddedResource;
+using System.Reflection;
 
-namespace Programs.Manager.Reader.Win.Service.EmbeddedResource;
+namespace Programs.Manager.Reader.Win.Service;
 
 ///<inheritdoc cref="IEmbeddedResourceService"/>
 public sealed class EmbeddedResourceService : IEmbeddedResourceService

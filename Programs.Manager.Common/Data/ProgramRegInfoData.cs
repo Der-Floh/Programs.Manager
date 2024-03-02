@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using Programs.Manager.Reader.Win.Service.ProgramRegInfo;
+﻿using Programs.Manager.Common.Service.ProgramRegInfo;
+using System.Drawing;
 
-namespace Programs.Manager.Reader.Win.Data;
+namespace Programs.Manager.Common.Data;
 
 /// <summary>
 /// Contains information from the registry about a program.
@@ -31,7 +31,13 @@ public sealed partial class ProgramRegInfoData
     /// <summary>
     /// Gets or sets the file path or URL to the program's display icon.
     /// </summary>
-    public string DisplayIcon { get; set; } = string.Empty;
+    public string DisplayIcon { get => _displayIconPath; set { _displayIconPath = value; } }
+
+    /// <summary>
+    /// Gets or sets the file path or URL to the program's display icon.
+    /// </summary>
+    public string DisplayIconPath { get; set; }
+    private string _displayIconPath = string.Empty;
 
     /// <summary>
     /// Gets or sets the display name of the program.
@@ -185,16 +191,6 @@ public sealed partial class ProgramRegInfoData
     /// </summary>
     /// <param name="programRegInfoService">Service to handle program registry information logic.</param>
     public ProgramRegInfoData(IProgramRegInfoService programRegInfoService) => _programRegInfoService = programRegInfoService;
-
-    /// <summary>
-    /// Initializes a new instance of the ProgramRegInfoData class.
-    /// </summary>
-    public ProgramRegInfoData() => _programRegInfoService = new ProgramRegInfoService();
-
-    /// <summary>
-    /// Fetches fallback values for the program.
-    /// </summary>
-    public void FetchFallbackValues() => _programRegInfoService.FetchFallbackValues(this);
 
     /// <summary>
     /// Gets the icon associated with the program.

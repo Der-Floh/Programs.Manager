@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using Programs.Manager.Reader.Win.Data;
+using Programs.Manager.Common.Data;
 
 namespace Programs.Manager.Reader.Win.Test.Data.Faker;
 

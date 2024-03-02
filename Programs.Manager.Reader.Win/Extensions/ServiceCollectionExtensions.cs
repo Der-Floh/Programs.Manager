@@ -1,12 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Programs.Manager.Common.Repository.ProgramInfo;
+using Programs.Manager.Common.Repository.ProgramInfoRepository;
+using Programs.Manager.Common.Service.EmbeddedResource;
+using Programs.Manager.Common.Service.IconLoader;
+using Programs.Manager.Common.Service.ProgramInfo;
+using Programs.Manager.Common.Service.ProgramRegInfo;
+using Programs.Manager.Common.Service.RegJump;
+using Programs.Manager.Common.Service.WindowsLanguage;
 using Programs.Manager.Reader.Win.Repository.ProgramInfo;
 using Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
-using Programs.Manager.Reader.Win.Service.EmbeddedResource;
-using Programs.Manager.Reader.Win.Service.IconLoader;
-using Programs.Manager.Reader.Win.Service.ProgramInfo;
-using Programs.Manager.Reader.Win.Service.ProgramRegInfo;
-using Programs.Manager.Reader.Win.Service.RegJump;
-using Programs.Manager.Reader.Win.Service.WindowsLanguage;
+using Programs.Manager.Reader.Win.Service;
 
 namespace Programs.Manager.Reader.Win.Extensions;
 
@@ -19,10 +22,10 @@ public static class ServiceCollectionExtensions
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     /// <remarks>
     /// This method registers the following services:<br/>
-    /// - <see cref="IProgramInfoRepository"/> implemented by <see cref="ProgramInfoRepository"/>.<br/>
+    /// - <see cref="IProgramInfoDataRepository"/> implemented by <see cref="ProgramInfoDataRepository"/>.<br/>
     /// - <see cref="IProgramInfoService"/> implemented by <see cref="ProgramInfoService"/>.<br/>
     /// - <see cref="IProgramRegInfoService"/> implemented by <see cref="ProgramRegInfoService"/>.<br/>
-    /// - <see cref="IProgramRegInfoRepository"/> implemented by <see cref="ProgramRegInfoRepository"/>.<br/>
+    /// - <see cref="IProgramRegInfoDataRepository"/> implemented by <see cref="ProgramRegInfoDataRepository"/>.<br/>
     /// - <see cref="IWindowsLanguageService"/> implemented by <see cref="WindowsLanguageService"/>.<br/>
     /// - <see cref="IRegJumpService"/> implemented by <see cref="RegJumpService"/>.<br/>
     /// - <see cref="IEmbeddedResourceService"/> implemented by <see cref="EmbeddedResourceService"/>.<br/>
@@ -31,10 +34,11 @@ public static class ServiceCollectionExtensions
     /// </remarks>
     public static IServiceCollection AddWindowsProgramsReader(this IServiceCollection services)
     {
-        services.AddSingleton<IProgramInfoRepository, ProgramInfoRepository>();
+        services.AddSingleton<IProgramInfoDataRepository, ProgramInfoDataRepository>();
         services.AddSingleton<IProgramInfoService, ProgramInfoService>();
         services.AddSingleton<IProgramRegInfoService, ProgramRegInfoService>();
-        services.AddSingleton<IProgramRegInfoRepository, ProgramRegInfoRepository>();
+        services.AddSingleton<IProgramInfoRepository, ProgramInfoRepository>();
+        services.AddSingleton<IProgramRegInfoDataRepository, ProgramRegInfoDataRepository>();
         services.AddSingleton<IWindowsLanguageService, WindowsLanguageService>();
         services.AddSingleton<IRegJumpService, RegJumpService>();
         services.AddSingleton<IEmbeddedResourceService, EmbeddedResourceService>();

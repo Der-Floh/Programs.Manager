@@ -1,10 +1,10 @@
-﻿using Programs.Manager.Reader.Win.Data;
-using Programs.Manager.Reader.Win.Service.EmbeddedResource;
-using Programs.Manager.Reader.Win.Service.RegJump;
+﻿using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Service.ProgramInfo;
+using Programs.Manager.Common.Service.RegJump;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Programs.Manager.Reader.Win.Service.ProgramInfo;
+namespace Programs.Manager.Reader.Win.Service;
 
 ///<inheritdoc cref="IIconLoaderService"/>
 public sealed class ProgramInfoService : IProgramInfoService
@@ -29,6 +29,23 @@ public sealed class ProgramInfoService : IProgramInfoService
     {
         var _embeddedResourceService = new EmbeddedResourceService();
         _regJumpService = new RegJumpService(_embeddedResourceService);
+    }
+
+    public void FetchFallbackProperties(ProgramInfoData programInfoData)
+    {
+        if (programInfoData.EstimatedSize == -1 && !string.IsNullOrEmpty(programInfoData.InstallLocation))
+        {
+            try
+            {
+                var directoryInfo = new DirectoryInfo(programInfoData.InstallLocation);
+                long totalSize = 0;
+                FileInfo[] fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
+                foreach (FileInfo fileInfo in fileInfos)
+                    totalSize += fileInfo.Length;
+                programInfoData.EstimatedSize = totalSize;
+            }
+            catch { }
+        }
     }
 
     public void UpdateFromDifferent(ProgramInfoData programInfoData, ProgramInfoData programInfoDataToCopy)

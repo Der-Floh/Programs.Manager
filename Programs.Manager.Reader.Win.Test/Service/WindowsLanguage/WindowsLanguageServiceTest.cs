@@ -1,7 +1,7 @@
 using Moq;
-using Programs.Manager.Reader.Win.Data;
-using Programs.Manager.Reader.Win.Service.EmbeddedResource;
-using Programs.Manager.Reader.Win.Service.WindowsLanguage;
+using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Service.EmbeddedResource;
+using Programs.Manager.Reader.Win.Service;
 using Programs.Manager.Reader.Win.Test.Data.Faker;
 
 namespace Programs.Manager.Reader.Win.Test.Service.WindowsLanguage;

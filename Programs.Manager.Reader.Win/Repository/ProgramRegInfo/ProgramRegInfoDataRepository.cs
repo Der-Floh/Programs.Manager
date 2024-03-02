@@ -1,13 +1,15 @@
-﻿using Programs.Manager.Reader.Win.Data;
+﻿using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Service.ProgramRegInfo;
+using Programs.Manager.Reader.Win.Data;
 using Programs.Manager.Reader.Win.Extensions;
-using Programs.Manager.Reader.Win.Service.ProgramRegInfo;
+using Programs.Manager.Reader.Win.Service;
 using Programs.Manager.Reader.Win.Utility;
 using System.Reflection;
 
 namespace Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
 
 ///<inheritdoc cref="IProgramInfoRepository"/>
-public sealed class ProgramRegInfoRepository : IProgramRegInfoRepository
+public sealed class ProgramRegInfoDataRepository : IProgramRegInfoDataRepository
 {
     private const string LMUninstallLocation64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\";
     private const string LMUninstallLocation32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\";
@@ -16,18 +18,18 @@ public sealed class ProgramRegInfoRepository : IProgramRegInfoRepository
     private readonly IProgramRegInfoService _programRegInfoService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProgramRegInfoRepository"/> class with specified services.
+    /// Initializes a new instance of the <see cref="ProgramRegInfoDataRepository"/> class with specified services.
     /// </summary>
     /// <param name="programRegInfoService">The <see cref="IProgramRegInfoService"/> object to use for ProgramRegInfo operations.</param>
-    public ProgramRegInfoRepository(IProgramRegInfoService programRegInfoService)
+    public ProgramRegInfoDataRepository(IProgramRegInfoService programRegInfoService)
     {
         _programRegInfoService = programRegInfoService;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProgramRegInfoRepository"/> class.
+    /// Initializes a new instance of the <see cref="ProgramRegInfoDataRepository"/> class.
     /// </summary>
-    public ProgramRegInfoRepository()
+    public ProgramRegInfoDataRepository()
     {
         _programRegInfoService = new ProgramRegInfoService();
     }

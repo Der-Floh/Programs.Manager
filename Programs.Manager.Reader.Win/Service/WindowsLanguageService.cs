@@ -1,7 +1,8 @@
-﻿using Programs.Manager.Reader.Win.Data;
-using Programs.Manager.Reader.Win.Service.EmbeddedResource;
+﻿using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Service.EmbeddedResource;
+using Programs.Manager.Common.Service.WindowsLanguage;
 
-namespace Programs.Manager.Reader.Win.Service.WindowsLanguage;
+namespace Programs.Manager.Reader.Win.Service;
 
 ///<inheritdoc cref="IWindowsLanguageService"/>
 public sealed class WindowsLanguageService : IWindowsLanguageService

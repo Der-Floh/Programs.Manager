@@ -1,26 +1,28 @@
-﻿using Programs.Manager.Reader.Win.Data;
+﻿using Programs.Manager.Common.Data;
+using Programs.Manager.Common.Repository.ProgramInfo;
+using Programs.Manager.Common.Service.ProgramInfo;
+using Programs.Manager.Common.Service.WindowsLanguage;
 using Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
-using Programs.Manager.Reader.Win.Service.ProgramInfo;
-using Programs.Manager.Reader.Win.Service.WindowsLanguage;
+using Programs.Manager.Reader.Win.Service;
 
 namespace Programs.Manager.Reader.Win.Repository.ProgramInfo;
 
-///<inheritdoc cref="IProgramInfoRepository"/>
-public sealed class ProgramInfoRepository : IProgramInfoRepository
+///<inheritdoc cref="IProgramInfoDataRepository"/>
+public sealed class ProgramInfoDataRepository : IProgramInfoDataRepository
 {
     private readonly IProgramInfoService _programInfoService;
-    private readonly IProgramRegInfoRepository _programRegInfoRepository;
+    private readonly IProgramRegInfoDataRepository _programRegInfoRepository;
     private readonly IWindowsLanguageService _windowsLanguageService;
 
     private readonly IEnumerable<WindowsLanguageData>? _languages;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProgramInfoRepository"/> class with specified services.
+    /// Initializes a new instance of the <see cref="ProgramInfoDataRepository"/> class with specified services.
     /// </summary>
     /// <param name="programInfoService">The <see cref="IProgramInfoService"/> object for managing program information.</param>
-    /// <param name="programRegInfoRepository">The <see cref="IProgramRegInfoRepository"/> object for accessing registry information about programs.</param>
+    /// <param name="programRegInfoRepository">The <see cref="IProgramRegInfoDataRepository"/> object for accessing registry information about programs.</param>
     /// <param name="windowsLanguageService">The <see cref="IWindowsLanguageService"/> object for handling Windows language data.</param>
-    public ProgramInfoRepository(IProgramInfoService programInfoService, IProgramRegInfoRepository programRegInfoRepository, IWindowsLanguageService windowsLanguageService)
+    public ProgramInfoDataRepository(IProgramInfoService programInfoService, IProgramRegInfoDataRepository programRegInfoRepository, IWindowsLanguageService windowsLanguageService)
     {
         _programInfoService = programInfoService;
         _programRegInfoRepository = programRegInfoRepository;
@@ -30,12 +32,12 @@ public sealed class ProgramInfoRepository : IProgramInfoRepository
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProgramInfoRepository"/> class.
+    /// Initializes a new instance of the <see cref="ProgramInfoDataRepository"/> class.
     /// </summary>
-    public ProgramInfoRepository()
+    public ProgramInfoDataRepository()
     {
         _programInfoService = new ProgramInfoService();
-        _programRegInfoRepository = new ProgramRegInfoRepository();
+        _programRegInfoRepository = new ProgramRegInfoDataRepository();
         _windowsLanguageService = new WindowsLanguageService();
 
         _languages = _windowsLanguageService.GetAll();
@@ -51,8 +53,8 @@ public sealed class ProgramInfoRepository : IProgramInfoRepository
             try
             {
                 action?.Invoke(program);
-                program.FetchFallbackValues();
                 ProgramInfoData programInfo = FromProgramRegInfo(program);
+                programInfo.FetchFallbackProperties();
                 programInfos.Add(programInfo);
             }
             catch { }

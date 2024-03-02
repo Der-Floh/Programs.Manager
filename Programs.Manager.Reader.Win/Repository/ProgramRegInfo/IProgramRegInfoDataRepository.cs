@@ -1,11 +1,11 @@
-﻿using Programs.Manager.Reader.Win.Data;
+﻿using Programs.Manager.Common.Data;
 
 namespace Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
 
 /// <summary>
 /// Repository for accessing and processing registry information of installed programs.
 /// </summary>
-public interface IProgramRegInfoRepository
+public interface IProgramRegInfoDataRepository
 {
     /// <summary>
     /// Constructs a <see cref="ProgramRegInfoData"/> object from registry key values.

@@ -1,4 +1,4 @@
-﻿using Programs.Manager.Reader.Win.Service.EmbeddedResource;
+﻿using Programs.Manager.Reader.Win.Service;
 
 namespace Programs.Manager.Reader.Win.Test.Service.EmbeddedResource;
 
