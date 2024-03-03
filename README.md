@@ -15,11 +15,11 @@ This library is intended for developers and IT professionals who are working wit
 
 ## Getting Started
 
-To get started with the Windows Programs Reader Library, please refer to the [Getting Started]([#getting-started](https://der-floh.github.io/Programs.Manager/docs/getting-started.html)) guide. For more detailed information on specific classes and methods, please explore the [API Documentation]([#api-documentation](https://der-floh.github.io/Programs.Manager/api/Programs.html)).
+To get started with the Windows Programs Reader Library, please refer to the [Getting Started](https://der-floh.github.io/Programs.Manager/docs/getting-started.html) guide. For more detailed information on specific classes and methods, please explore the [API Documentation](https://der-floh.github.io/Programs.Manager/api/Programs.html).
 
 ## Contributing and Feedback
 
-Contributions and feedback are invaluable to the ongoing development and improvement of this library. Please refer to the [Contributing Guidelines]([#contributing](https://der-floh.github.io/Programs.Manager/docs/contributing.html)) for more information on how you can participate in the development process.
+Contributions and feedback are invaluable to the ongoing development and improvement of this library. Please refer to the [Contributing Guidelines](https://der-floh.github.io/Programs.Manager/docs/contributing.html) for more information on how you can participate in the development process.
 
 ---
 
