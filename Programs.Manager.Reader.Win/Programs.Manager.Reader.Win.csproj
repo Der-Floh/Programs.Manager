@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Programs.Manager.Common\Programs.Manager.Common.csproj" />
+    <ProjectReference Include="..\Programs.Manager.Common.Win\Programs.Manager.Common.Win.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.ProgramRegInfo;
+﻿using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Data;
 using Programs.Manager.Reader.Win.Extensions;
 using Programs.Manager.Reader.Win.Service;

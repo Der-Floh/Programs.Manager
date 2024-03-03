@@ -10,6 +10,9 @@
           "src": "../../",
           "files": [
             "**/*.csproj"
+          ],
+          "exclude": [
+            "**/*.Test.csproj"
           ]
         }
       ],

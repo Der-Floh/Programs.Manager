@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
-using Programs.Manager.Common.Service.EmbeddedResource;
-using Programs.Manager.Common.Service.RegJump;
+using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Utility;
 using System.Diagnostics;
 

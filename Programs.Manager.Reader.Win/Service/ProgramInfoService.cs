@@ -1,12 +1,11 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.ProgramInfo;
-using Programs.Manager.Common.Service.RegJump;
+﻿using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace Programs.Manager.Reader.Win.Service;
 
-///<inheritdoc cref="IIconLoaderService"/>
+///<inheritdoc cref="IProgramInfoService"/>
 public sealed class ProgramInfoService : IProgramInfoService
 {
     private const string CmdFileName = "cmd.exe";

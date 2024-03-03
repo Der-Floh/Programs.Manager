@@ -1,4 +1,4 @@
-﻿namespace Programs.Manager.Common.Service.EmbeddedResource;
+﻿namespace Programs.Manager.Common.Win.Service;
 
 /// <summary>
 /// Provides methods to manage and access embedded resources within the application.

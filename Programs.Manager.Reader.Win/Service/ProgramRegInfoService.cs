@@ -1,6 +1,5 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.IconLoader;
-using Programs.Manager.Common.Service.ProgramRegInfo;
+﻿using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service;
 using System.Drawing;
 
 namespace Programs.Manager.Reader.Win.Service;

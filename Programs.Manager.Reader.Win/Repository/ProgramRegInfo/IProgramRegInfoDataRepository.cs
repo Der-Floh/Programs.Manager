@@ -1,4 +1,4 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 
 namespace Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
 

@@ -1,7 +1,7 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 using System.Drawing;
 
-namespace Programs.Manager.Common.Service.ProgramRegInfo;
+namespace Programs.Manager.Common.Win.Service;
 
 /// <summary>
 /// Service for managing operations related to program registry information.

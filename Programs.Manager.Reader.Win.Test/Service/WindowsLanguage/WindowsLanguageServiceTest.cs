@@ -1,6 +1,6 @@
 using Moq;
-using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.EmbeddedResource;
+using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service.EmbeddedResource;
 using Programs.Manager.Reader.Win.Service;
 using Programs.Manager.Reader.Win.Test.Data.Faker;
 

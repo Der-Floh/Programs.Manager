@@ -1,7 +1,7 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 using System.Drawing;
 
-namespace Programs.Manager.Common.Service.IconLoader;
+namespace Programs.Manager.Common.Win.Service;
 
 /// <summary>
 /// Handles loading of icons for applications from various sources.

@@ -1,6 +1,6 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Service.WindowsLanguage;
+namespace Programs.Manager.Common.Win.Service;
 
 /// <summary>
 /// Service for managing Windows language data.

@@ -1,10 +1,10 @@
-﻿using Programs.Manager.Common.Service.ProgramInfo;
+﻿using Programs.Manager.Common.Win.Service;
 using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Programs.Manager.Common.Data;
+namespace Programs.Manager.Common.Win.Data;
 
 /// <summary>
 /// Contains information about a program.

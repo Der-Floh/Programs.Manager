@@ -1,6 +1,6 @@
 ﻿using Ico.Reader;
-using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.IconLoader;
+using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Extensions;
 using System.Drawing;
 

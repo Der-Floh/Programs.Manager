@@ -1,7 +1,6 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Repository.ProgramInfo;
+﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Repository.ProgramInfoRepository;
+namespace Programs.Manager.Common.Win.Repository.ProgramInfo;
 
 public class ProgramInfoRepository : IProgramInfoRepository
 {

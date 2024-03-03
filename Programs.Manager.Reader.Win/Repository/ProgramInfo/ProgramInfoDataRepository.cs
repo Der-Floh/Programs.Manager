@@ -1,7 +1,6 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Repository.ProgramInfo;
-using Programs.Manager.Common.Service.ProgramInfo;
-using Programs.Manager.Common.Service.WindowsLanguage;
+﻿using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Repository;
+using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
 using Programs.Manager.Reader.Win.Service;
 

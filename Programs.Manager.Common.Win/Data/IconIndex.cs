@@ -1,4 +1,4 @@
-﻿namespace Programs.Manager.Common.Data;
+﻿namespace Programs.Manager.Common.Win.Data;
 
 /// <summary>
 /// Represents an icon index.

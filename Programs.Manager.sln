@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programs.Manager.Reader.Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programs.Manager.Reader.Win.Test", "Programs.Manager.Reader.Win.Test\Programs.Manager.Reader.Win.Test.csproj", "{E74309F7-B3F2-4E85-8B50-D4639C260711}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programs.Manager.Common", "Programs.Manager.Common\Programs.Manager.Common.csproj", "{0978BFA6-C854-409C-81BC-0EA3655DDE3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Programs.Manager.Common.Win", "Programs.Manager.Common.Win\Programs.Manager.Common.Win.csproj", "{9D905521-D95B-4794-BDF3-9428B8FA233F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{E74309F7-B3F2-4E85-8B50-D4639C260711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E74309F7-B3F2-4E85-8B50-D4639C260711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E74309F7-B3F2-4E85-8B50-D4639C260711}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0978BFA6-C854-409C-81BC-0EA3655DDE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0978BFA6-C854-409C-81BC-0EA3655DDE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0978BFA6-C854-409C-81BC-0EA3655DDE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0978BFA6-C854-409C-81BC-0EA3655DDE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D905521-D95B-4794-BDF3-9428B8FA233F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D905521-D95B-4794-BDF3-9428B8FA233F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D905521-D95B-4794-BDF3-9428B8FA233F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D905521-D95B-4794-BDF3-9428B8FA233F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

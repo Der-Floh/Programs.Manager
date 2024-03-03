@@ -1,6 +1,5 @@
-﻿using Programs.Manager.Common.Data;
-using Programs.Manager.Common.Service.EmbeddedResource;
-using Programs.Manager.Common.Service.WindowsLanguage;
+﻿using Programs.Manager.Common.Win.Data;
+using Programs.Manager.Common.Win.Service;
 
 namespace Programs.Manager.Reader.Win.Service;
 

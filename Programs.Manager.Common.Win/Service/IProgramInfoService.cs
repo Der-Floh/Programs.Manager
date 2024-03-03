@@ -1,6 +1,6 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Service.ProgramInfo;
+namespace Programs.Manager.Common.Win.Service;
 
 /// <summary>
 /// Service for managing operations related to program information.

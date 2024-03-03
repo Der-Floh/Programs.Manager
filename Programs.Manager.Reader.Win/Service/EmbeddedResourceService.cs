@@ -1,4 +1,4 @@
-﻿using Programs.Manager.Common.Service.EmbeddedResource;
+﻿using Programs.Manager.Common.Win.Service;
 using System.Reflection;
 
 namespace Programs.Manager.Reader.Win.Service;

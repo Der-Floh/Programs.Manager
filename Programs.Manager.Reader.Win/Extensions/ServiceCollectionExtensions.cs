@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Programs.Manager.Common.Repository.ProgramInfo;
-using Programs.Manager.Common.Repository.ProgramInfoRepository;
-using Programs.Manager.Common.Service.EmbeddedResource;
-using Programs.Manager.Common.Service.IconLoader;
-using Programs.Manager.Common.Service.ProgramInfo;
-using Programs.Manager.Common.Service.ProgramRegInfo;
-using Programs.Manager.Common.Service.RegJump;
-using Programs.Manager.Common.Service.WindowsLanguage;
+using Programs.Manager.Common.Win.Repository;
+using Programs.Manager.Common.Win.Repository.ProgramInfo;
+using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Repository.ProgramInfo;
 using Programs.Manager.Reader.Win.Repository.ProgramRegInfo;
 using Programs.Manager.Reader.Win.Service;
@@ -25,6 +20,7 @@ public static class ServiceCollectionExtensions
     /// - <see cref="IProgramInfoDataRepository"/> implemented by <see cref="ProgramInfoDataRepository"/>.<br/>
     /// - <see cref="IProgramInfoService"/> implemented by <see cref="ProgramInfoService"/>.<br/>
     /// - <see cref="IProgramRegInfoService"/> implemented by <see cref="ProgramRegInfoService"/>.<br/>
+    /// - <see cref="IProgramInfoRepository"/> implemented by <see cref="ProgramInfoRepository"/>.<br/>
     /// - <see cref="IProgramRegInfoDataRepository"/> implemented by <see cref="ProgramRegInfoDataRepository"/>.<br/>
     /// - <see cref="IWindowsLanguageService"/> implemented by <see cref="WindowsLanguageService"/>.<br/>
     /// - <see cref="IRegJumpService"/> implemented by <see cref="RegJumpService"/>.<br/>

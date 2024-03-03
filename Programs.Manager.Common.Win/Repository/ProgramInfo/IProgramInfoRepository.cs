@@ -1,6 +1,6 @@
-﻿using Programs.Manager.Common.Data;
+﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Repository.ProgramInfo;
+namespace Programs.Manager.Common.Win.Repository.ProgramInfo;
 
 /// <summary>
 /// Repository for retrieving and processing information about installed programs.
