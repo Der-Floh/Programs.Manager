@@ -99,4 +99,6 @@ public sealed class ProgramInfoService : IProgramInfoService
         }
         catch { return false; }
     }
+
+    public Task<bool> LoadIcon(ProgramInfoData programInfoData) => throw new NotImplementedException();
 }

@@ -31,6 +31,13 @@ public interface IProgramInfoService
     Task<bool> Uninstall(ProgramInfoData programInfoData, bool quiet = false);
 
     /// <summary>
+    /// Loads the Icon for a <see cref="ProgramInfoData"/> object.
+    /// </summary>
+    /// <param name="programInfoData">The program information for which to load the Icon.</param>
+    /// <returns>A task representing the asynchronous operation, returning true if successful.</returns>
+    Task<bool> LoadIcon(ProgramInfoData programInfoData);
+
+    /// <summary>
     /// Updates the properties of one <see cref="ProgramInfoData"/> object from another.
     /// </summary>
     /// <param name="programInfoData">The object to be updated.</param>

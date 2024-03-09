@@ -21,8 +21,9 @@ public sealed class IconLoaderService : IIconLoaderService
 
     public Bitmap? GetIcon(ProgramRegInfoData programRegInfoData)
     {
-        if (programRegInfoData.DisplayName.ToLower().Contains("beyond compare"))
+        if (programRegInfoData.DisplayName.ToLower().Contains("shovel"))
         { }
+
         Bitmap? icon = null;
         if (!string.IsNullOrEmpty(programRegInfoData.DisplayIcon))
             icon = GetIconFromDisplayIconPath(programRegInfoData.DisplayIcon);
@@ -34,6 +35,26 @@ public sealed class IconLoaderService : IIconLoaderService
                 icon = GetIconFromAppDirectory(programRegInfoData.InstallLocation, programRegInfoData.DisplayName);
         }
 
+        if (icon is not null)
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "IconsTest");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var displayNameFile = new string(programRegInfoData.DisplayName.Where(ch => !invalidChars.Contains(ch) && ch >= 32).ToArray());
+            var file = Path.Combine(path, displayNameFile + ".png");
+            try
+            {
+                icon.Save(file);
+            }
+            catch (Exception ex)
+            {
+                if (File.Exists(file))
+                    File.Delete(file);
+                File.WriteAllText(Path.Combine(path, "_Error_" + programRegInfoData.DisplayName + ".txt"), ex.ToString());
+            }
+        }
+
         return icon;
     }
 
@@ -41,7 +62,7 @@ public sealed class IconLoaderService : IIconLoaderService
     {
         Bitmap? icon = null;
         var extension = Path.GetExtension(displayIcon).ToLower();
-        if (extension.Contains(".ico") || extension.Contains(".exe"))
+        if (extension.Contains(".ico") || extension.Contains(".exe") || string.IsNullOrEmpty(extension))
         {
             (var iconPath, var iconIndex) = SplitIconIndex(displayIcon);
             iconPath = iconPath.Trim('"');
@@ -168,6 +189,10 @@ public sealed class IconLoaderService : IIconLoaderService
 
     public Bitmap? GetIconFromFile(string iconPath, IconIndex? iconIndex = null)
     {
+        //var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "IconsTest");
+        //if (!Directory.Exists(path))
+        //    Directory.CreateDirectory(path);
+
         var iconData = _iconReader.Read(iconPath);
         byte[]? iconBytes = null;
         if (iconIndex is not null)
@@ -185,6 +210,8 @@ public sealed class IconLoaderService : IIconLoaderService
         }
 
         iconBytes ??= iconData?.GetImage(iconData.PreferredImageIndex());
+        //if (iconBytes is not null)
+        //    File.WriteAllBytes(Path.Combine(path, iconData.Name + ".png"), iconBytes);
 
         if (iconBytes is null)
             return null;

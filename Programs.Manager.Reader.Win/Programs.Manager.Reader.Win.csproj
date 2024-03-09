@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ico.Reader" Version="1.0.0" />
+    <PackageReference Include="Ico.Reader" Version="1.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
   </ItemGroup>
