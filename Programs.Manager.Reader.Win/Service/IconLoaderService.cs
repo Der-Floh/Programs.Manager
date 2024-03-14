@@ -21,7 +21,7 @@ public sealed class IconLoaderService : IIconLoaderService
 
     public Bitmap? GetIcon(ProgramRegInfoData programRegInfoData)
     {
-        if (programRegInfoData.DisplayName.ToLower().Contains("shovel"))
+        if (programRegInfoData.DisplayName.ToLower().Contains("snapdragon"))
         { }
 
         Bitmap? icon = null;
@@ -35,25 +35,25 @@ public sealed class IconLoaderService : IIconLoaderService
                 icon = GetIconFromAppDirectory(programRegInfoData.InstallLocation, programRegInfoData.DisplayName);
         }
 
-        if (icon is not null)
-        {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "IconsTest");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-            var invalidChars = Path.GetInvalidFileNameChars();
-            var displayNameFile = new string(programRegInfoData.DisplayName.Where(ch => !invalidChars.Contains(ch) && ch >= 32).ToArray());
-            var file = Path.Combine(path, displayNameFile + ".png");
-            try
-            {
-                icon.Save(file);
-            }
-            catch (Exception ex)
-            {
-                if (File.Exists(file))
-                    File.Delete(file);
-                File.WriteAllText(Path.Combine(path, "_Error_" + programRegInfoData.DisplayName + ".txt"), ex.ToString());
-            }
-        }
+        //if (icon is not null)
+        //{
+        //    var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "IconsTest");
+        //    if (!Directory.Exists(path))
+        //        Directory.CreateDirectory(path);
+        //    var invalidChars = Path.GetInvalidFileNameChars();
+        //    var displayNameFile = new string(programRegInfoData.DisplayName.Where(ch => !invalidChars.Contains(ch) && ch >= 32).ToArray());
+        //    var file = Path.Combine(path, displayNameFile + ".png");
+        //    try
+        //    {
+        //        icon.Save(file);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (File.Exists(file))
+        //            File.Delete(file);
+        //        File.WriteAllText(Path.Combine(path, "_Error_" + programRegInfoData.DisplayName + ".txt"), ex.ToString());
+        //    }
+        //}
 
         return icon;
     }
@@ -79,17 +79,14 @@ public sealed class IconLoaderService : IIconLoaderService
 
     private Bitmap? GetIconFromAppDirectory(string installLocation, string displayName)
     {
-        IEnumerable<string> files = Directory.EnumerateFiles(installLocation, "*.exe", SearchOption.AllDirectories);
+        var files = Directory.EnumerateFiles(installLocation, "*.exe", SearchOption.AllDirectories);
         foreach (var file in files)
         {
             if (Path.GetFileNameWithoutExtension(file).ContainsGeneralized(displayName))
             {
-                var iconData = _iconReader.Read(file);
-                var iconBytes = iconData?.GetImage(iconData.PreferredImageIndex());
-                if (iconBytes is null)
-                    continue;
-                var icon = new Bitmap(new MemoryStream(iconBytes));
-                return icon;
+                var icon = GetIconFromFile(file);
+                if (icon is not null)
+                    return icon;
             }
         }
         return null;
@@ -119,41 +116,28 @@ public sealed class IconLoaderService : IIconLoaderService
             iconPath ??= GetIconPathFromDirectoryNoExt(installerPathUser, displayName);
         }
 
-        if (iconPath is not null && File.Exists(iconPath))
-        {
-            try
-            {
-                var iconData = _iconReader.Read(iconPath);
-                var iconBytes = iconData?.GetImage(iconData.PreferredImageIndex());
-                if (iconBytes is null)
-                    return null;
-                var icon = new Bitmap(new MemoryStream(iconBytes));
-                return icon;
-            }
-            catch { return null; }
-        }
+        if (!string.IsNullOrEmpty(iconPath) && File.Exists(iconPath))
+            return GetIconFromFile(iconPath);
         else
-        {
             return null;
-        }
     }
 
     private static string? GetIconPathFromDirectoryIco(string directoryPath, string displayName)
     {
-        FileInfo[] icoFiles = new DirectoryInfo(directoryPath).GetFiles("*.ico").OrderByDescending(x => x.Length).ToArray();
+        var icoFiles = new DirectoryInfo(directoryPath).GetFiles("*.ico").OrderByDescending(x => x.Length).ToArray();
         return GetIconFileFromFiles(icoFiles, displayName);
     }
 
     private static string? GetIconPathFromDirectoryExe(string directoryPath, string displayName)
     {
-        FileInfo[] exeFiles = new DirectoryInfo(directoryPath).GetFiles("*.exe").OrderByDescending(x => x.Length).ToArray();
+        var exeFiles = new DirectoryInfo(directoryPath).GetFiles("*.exe").OrderByDescending(x => x.Length).ToArray();
         return GetIconFileFromFiles(exeFiles, displayName);
     }
 
     private static string? GetIconPathFromDirectoryNoExt(string directoryPath, string displayName)
     {
-        FileInfo[] allFiles = new DirectoryInfo(directoryPath).GetFiles();
-        FileInfo[] filesWithoutExt = allFiles.Where(x => string.IsNullOrEmpty(x.Extension)).ToArray();
+        var allFiles = new DirectoryInfo(directoryPath).GetFiles();
+        var filesWithoutExt = allFiles.Where(x => string.IsNullOrEmpty(x.Extension)).ToArray();
         return GetIconFileFromFiles(filesWithoutExt, displayName);
     }
 
@@ -161,7 +145,7 @@ public sealed class IconLoaderService : IIconLoaderService
     {
         if (files.Length != 0)
         {
-            FileInfo? file = FindSimilarDisplayName(files, displayName);
+            var file = FindSimilarDisplayName(files, displayName);
             file ??= files[0];
             return file.FullName;
         }
@@ -172,7 +156,7 @@ public sealed class IconLoaderService : IIconLoaderService
     {
         FileInfo? similarFileWithName = null;
         FileInfo? similarFileWithIcon = null;
-        foreach (FileInfo file in files)
+        foreach (var file in files)
         {
             var fileName = Path.GetFileNameWithoutExtension(file.FullName);
             if (fileName.ContainsGeneralized(displayName))
@@ -180,42 +164,75 @@ public sealed class IconLoaderService : IIconLoaderService
                 similarFileWithName = file;
                 break;
             }
-            if (fileName.ContainsGeneralized("icon"))
+            if (fileName.ContainsGeneralized("icon") || fileName.ContainsGeneralized("logo"))
                 similarFileWithIcon = file;
         }
 
         return similarFileWithName is null ? similarFileWithIcon : similarFileWithName;
     }
 
-    public Bitmap? GetIconFromFile(string iconPath, IconIndex? iconIndex = null)
+    private static string? FindImageRefGroupName(Ico.Reader.Data.IcoData icoData, int imageRefIndex)
     {
-        //var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "IconsTest");
-        //if (!Directory.Exists(path))
-        //    Directory.CreateDirectory(path);
-
-        var iconData = _iconReader.Read(iconPath);
-        byte[]? iconBytes = null;
-        if (iconIndex is not null)
+        var imageRef = icoData.ImageReferences[imageRefIndex];
+        foreach (var group in icoData.Groups)
         {
-            if (iconIndex.Index >= 0 && iconIndex.Index < iconData?.ImageReferences.Count)
+            foreach (var directoryEntry in group.DirectoryEntries)
             {
-                iconBytes = iconData?.GetImage(iconIndex.Index);
-            }
-            else if (!string.IsNullOrEmpty(iconIndex.GroupName))
-            {
-                var iconGroup = iconData?.Groups.FirstOrDefault(x => x.Name == iconIndex.GroupName);
-                if (iconGroup is not null)
-                    iconBytes = iconData?.GetImage(iconData.PreferredImageIndex(iconGroup.Name));
+                if (directoryEntry.RealImageOffset == imageRef.Offset)
+                    return group.Name;
             }
         }
 
-        iconBytes ??= iconData?.GetImage(iconData.PreferredImageIndex());
-        //if (iconBytes is not null)
-        //    File.WriteAllBytes(Path.Combine(path, iconData.Name + ".png"), iconBytes);
+        return null;
+    }
+
+    private static string? FindMainGroupName(Ico.Reader.Data.IcoData icoData)
+    {
+        foreach (var group in icoData.Groups)
+        {
+            if (group.Name.ContainsGeneralized("main") || group.Name.ContainsGeneralized("logo"))
+                return group.Name;
+        }
+        return null;
+    }
+
+    public Bitmap? GetIconFromFile(string iconPath, IconIndex? iconIndex = null)
+    {
+        var iconData = _iconReader.Read(iconPath);
+        if (iconData is null)
+            return null;
+
+        byte[]? iconBytes = null;
+        var index = 0;
+        if (iconIndex is not null)
+        {
+            if (iconIndex.Index >= 0 && iconIndex.Index < iconData.ImageReferences.Count)
+            {
+                var groupName = FindImageRefGroupName(iconData, iconIndex.Index)!;
+                index = iconData.PreferredImageIndex(groupName);
+
+                iconBytes = iconData.GetImage(index);
+            }
+            else if (!string.IsNullOrEmpty(iconIndex.GroupName))
+            {
+                var iconGroup = iconData.Groups.FirstOrDefault(x => x.Name == iconIndex.GroupName);
+                if (iconGroup is not null)
+                    iconBytes = iconData.GetImage(iconData.PreferredImageIndex(iconGroup.Name));
+            }
+        }
+
+        var mainGroupName = FindMainGroupName(iconData);
+        if (mainGroupName is null)
+            index = iconData.PreferredImageIndex();
+        else
+            index = iconData.PreferredImageIndex(mainGroupName);
+        iconBytes ??= iconData.GetImage(index);
 
         if (iconBytes is null)
             return null;
-        var icon = new Bitmap(new MemoryStream(iconBytes));
+
+        var icon = new Bitmap(new MemoryStream(iconBytes), true);
+
         return icon;
     }
 
