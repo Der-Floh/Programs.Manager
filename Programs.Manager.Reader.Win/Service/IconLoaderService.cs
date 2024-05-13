@@ -19,20 +19,20 @@ public sealed class IconLoaderService : IIconLoaderService
         _iconReader = new IcoReader();
     }
 
-    public Bitmap? GetIcon(ProgramRegInfoData programRegInfoData)
+    public Bitmap? GetIcon(ProgramInfoData programInfoData)
     {
-        if (programRegInfoData.DisplayName.ToLower().Contains("snapdragon"))
+        if (programInfoData.DisplayName.ToLower().Contains("snapdragon"))
         { }
 
         Bitmap? icon = null;
-        if (!string.IsNullOrEmpty(programRegInfoData.DisplayIcon))
-            icon = GetIconFromDisplayIconPath(programRegInfoData.DisplayIcon);
-        if (icon is null && !string.IsNullOrEmpty(programRegInfoData.DisplayName))
+        if (!string.IsNullOrEmpty(programInfoData.DisplayIcon))
+            icon = GetIconFromDisplayIconPath(programInfoData.DisplayIcon);
+        if (icon is null && !string.IsNullOrEmpty(programInfoData.DisplayName))
         {
-            if (!string.IsNullOrEmpty(programRegInfoData.Id) && programRegInfoData.Id.StartsWith('{') && programRegInfoData.Id.EndsWith('}'))
-                icon = GetIconFromWindowsInstallerCache(programRegInfoData.Id, programRegInfoData.DisplayName);
-            if (icon is null && !string.IsNullOrEmpty(programRegInfoData.InstallLocation))
-                icon = GetIconFromAppDirectory(programRegInfoData.InstallLocation, programRegInfoData.DisplayName);
+            if (!string.IsNullOrEmpty(programInfoData.Id) && programInfoData.Id.StartsWith('{') && programInfoData.Id.EndsWith('}'))
+                icon = GetIconFromWindowsInstallerCache(programInfoData.Id, programInfoData.DisplayName);
+            if (icon is null && !string.IsNullOrEmpty(programInfoData.InstallLocation))
+                icon = GetIconFromAppDirectory(programInfoData.InstallLocation, programInfoData.DisplayName);
         }
 
         //if (icon is not null)

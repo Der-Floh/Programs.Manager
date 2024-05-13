@@ -13,7 +13,7 @@ public interface IIconLoaderService
     /// </summary>
     /// <param name="programRegInfoData">The <see cref="ProgramRegInfoData"/> object for which to load the icon.</param>
     /// <returns>A <see cref="Bitmap"/> object representing the icon, or null if no icon could be found.</returns>
-    Bitmap? GetIcon(ProgramRegInfoData programRegInfoData);
+    Bitmap? GetIcon(ProgramInfoData programInfoData);
 
     /// <summary>
     /// Retrieves an icon from a file.

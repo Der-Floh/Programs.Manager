@@ -1,8 +1,9 @@
 ﻿using Programs.Manager.Common.Win.Service;
 using System.ComponentModel;
 using System.Drawing;
-using System.Reflection;
 using System.Runtime.CompilerServices;
+using WindowsRegistry.Serializer;
+using WindowsRegistry.Serializer.Attributes;
 
 namespace Programs.Manager.Common.Win.Data;
 
@@ -14,175 +15,187 @@ public class ProgramInfoData : INotifyPropertyChanged
     /// <summary>
     /// Unique identifier for the program. Is equivalent to the registry Program Guid
     /// </summary>
-    public string Id { get => _id; set { if (_id == value) return; _id = value; OnPropertyChanged(); } }
+    public string Id { get => _id; set => SetProperty(ref _id, value); }
     private string _id = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the authorized CDF (Channel Definition Format) prefix.
+    /// </summary>
+    public string? AuthorizedCDFPrefix { get => _authorizedCDFPrefix; set => SetProperty(ref _authorizedCDFPrefix, value); }
+    private string? _authorizedCDFPrefix;
 
     /// <summary>
     /// Comments associated with the program, if available.
     /// </summary>
-    public string? Comments { get => _comments; set { if (_comments == value) return; _comments = value; OnPropertyChanged(); } }
+    public string? Comments { get => _comments; set => SetProperty(ref _comments, value); }
     private string? _comments;
 
     /// <summary>
     /// Contact information for the program's publisher or support.
     /// </summary>
-    public string? Contact { get => _contact; set { if (_contact == value) return; _contact = value; OnPropertyChanged(); } }
+    public string? Contact { get => _contact; set => SetProperty(ref _contact, value); }
     private string? _contact;
 
     /// <summary>
     /// Icon representing the program, if available.
     /// </summary>
-    public Bitmap? DisplayIcon { get => _displayIcon; set { if (_displayIcon == value) return; _displayIcon = value; OnPropertyChanged(); } }
-    private Bitmap? _displayIcon;
+    [RegistryIgnore]
+    public Bitmap? DisplayIconImage { get => _displayIconImage; set => SetProperty(ref _displayIconImage, value); }
+    private Bitmap? _displayIconImage;
 
     /// <summary>
     /// Path to the icon representing the program, if available.
     /// </summary>
-    public string? DisplayIconPath { get => _displayIconPath; set { if (_displayIconPath == value) return; _displayIconPath = value; OnPropertyChanged(); } }
-    private string? _displayIconPath;
+    public string? DisplayIcon { get => _displayIcon; set => SetProperty(ref _displayIcon, value); }
+    private string? _displayIcon;
 
     /// <summary>
     /// Display name of the program as registered in the system.
     /// </summary>
-    public string? DisplayName { get => _displayName; set { if (_displayName == value) return; _displayName = value; OnPropertyChanged(); } }
+    public string? DisplayName { get => _displayName; set => SetProperty(ref _displayName, value); }
     private string? _displayName;
 
     /// <summary>
     /// Version of the program as displayed in the registry.
     /// </summary>
-    public string? DisplayVersion { get => _displayVersion; set { if (_displayVersion == value) return; _displayVersion = value; OnPropertyChanged(); } }
+    public string? DisplayVersion { get => _displayVersion; set => SetProperty(ref _displayVersion, value); }
     private string? _displayVersion;
 
     /// <summary>
     /// Estimated size of the program on disk, in bytes.
     /// </summary>
-    public long EstimatedSize { get => _estimatedSize; set { if (_estimatedSize == value) return; _estimatedSize = value; OnPropertyChanged(); } }
+    [RegistryNames("EstimatedSize", "Size")]
+    [RegistryDeserializerPostProcess(typeof(EstimatedSizePostProcess))]
+    public long EstimatedSize { get => _estimatedSize; set => SetProperty(ref _estimatedSize, value); }
     private long _estimatedSize = -1;
 
     /// <summary>
     /// Link to the help documentation or website for the program, if available.
     /// </summary>
-    public string? HelpLink { get => _helpLink; set { if (_helpLink == value) return; _helpLink = value; OnPropertyChanged(); } }
+    public string? HelpLink { get => _helpLink; set => SetProperty(ref _helpLink, value); }
     private string? _helpLink;
 
     /// <summary>
     /// Telephone number for help or support related to the program, if available.
     /// </summary>
-    public string? HelpTelephone { get => _helpTelephone; set { if (_helpTelephone == value) return; _helpTelephone = value; OnPropertyChanged(); } }
+    public string? HelpTelephone { get => _helpTelephone; set => SetProperty(ref _helpTelephone, value); }
     private string? _helpTelephone;
 
     /// <summary>
     /// Date when the program was installed, if available.
     /// </summary>
-    public string? InstallDate { get => _installDate; set { if (_installDate == value) return; _installDate = value; OnPropertyChanged(); } }
-    private string? _installDate;
+    public DateTime? InstallDate { get => _installDate; set => SetProperty(ref _installDate, value); }
+    private DateTime? _installDate;
 
     /// <summary>
     /// Location where the program is installed.
     /// </summary>
-    public string? InstallLocation { get => _installLocation; set { if (_installLocation == value) return; _installLocation = value; OnPropertyChanged(); } }
+    [RegistryNames("InstallLocation", "InstallDir")]
+    public string? InstallLocation { get => _installLocation; set => SetProperty(ref _installLocation, value); }
     private string? _installLocation;
 
     /// <summary>
     /// Source location from where the program was installed.
     /// </summary>
-    public string? InstallSource { get => _installSource; set { if (_installSource == value) return; _installSource = value; OnPropertyChanged(); } }
+    public string? InstallSource { get => _installSource; set => SetProperty(ref _installSource, value); }
     private string? _installSource;
 
     /// <summary>
     /// Language of the installed program.
     /// </summary>
-    public string? Language { get => _language; set { if (_language == value) return; _language = value; OnPropertyChanged(); } }
+    public string? Language { get => _language; set => SetProperty(ref _language, value); }
     private string? _language;
 
     /// <summary>
     /// Path to modify the installation of the program.
     /// </summary>
-    public string? ModifyPath { get => _modifyPath; set { if (_modifyPath == value) return; _modifyPath = value; OnPropertyChanged(); } }
+    public string? ModifyPath { get => _modifyPath; set => SetProperty(ref _modifyPath, value); }
     private string? _modifyPath;
 
     /// <summary>
     /// Indicates whether the program can be modified.
     /// </summary>
-    public bool NoModify { get => _noModify; set { if (_noModify == value) return; _noModify = value; OnPropertyChanged(); } }
+    public bool NoModify { get => _noModify; set => SetProperty(ref _noModify, value); }
     private bool _noModify;
 
     /// <summary>
     /// Indicates whether the program can be removed or uninstalled.
     /// </summary>
-    public bool NoRemove { get => _noRemove; set { if (_noRemove == value) return; _noRemove = value; OnPropertyChanged(); } }
+    public bool NoRemove { get => _noRemove; set => SetProperty(ref _noRemove, value); }
     private bool _noRemove;
 
     /// <summary>
     /// Indicates whether the program supports repair functionality.
     /// </summary>
-    public bool NoRepair { get => _noRepair; set { if (_noRepair == value) return; _noRepair = value; OnPropertyChanged(); } }
+    public bool NoRepair { get => _noRepair; set => SetProperty(ref _noRepair, value); }
     private bool _noRepair;
 
     /// <summary>
     /// Publisher of the program.
     /// </summary>
-    public string? Publisher { get => _publisher; set { if (_publisher == value) return; _publisher = value; OnPropertyChanged(); } }
+    public string? Publisher { get => _publisher; set => SetProperty(ref _publisher, value); }
     private string? _publisher;
 
     /// <summary>
     /// Link to the readme file of the program, if available.
     /// </summary>
-    public string? Readme { get => _readme; set { if (_readme == value) return; _readme = value; OnPropertyChanged(); } }
+    public string? Readme { get => _readme; set => SetProperty(ref _readme, value); }
     private string? _readme;
 
     /// <summary>
     /// Indicates whether the program is a system component.
     /// </summary>
-    public bool SystemComponent { get => _systemComponent; set { if (_systemComponent == value) return; _systemComponent = value; OnPropertyChanged(); } }
+    public bool SystemComponent { get => _systemComponent; set => SetProperty(ref _systemComponent, value); }
     private bool _systemComponent;
 
     /// <summary>
     /// Command line string to uninstall the program quietly.
     /// </summary>
-    public string? QuietUninstallString { get => _quietUninstallString; set { if (_quietUninstallString == value) return; _quietUninstallString = value; OnPropertyChanged(); } }
+    public string? QuietUninstallString { get => _quietUninstallString; set => SetProperty(ref _quietUninstallString, value); }
     private string? _quietUninstallString;
 
     /// <summary>
     /// Command line string used for uninstalling the program.
     /// </summary>
-    public string? UninstallString { get => _uninstallString; set { if (_uninstallString == value) return; _uninstallString = value; OnPropertyChanged(); } }
+    public string? UninstallString { get => _uninstallString; set => SetProperty(ref _uninstallString, value); }
     private string? _uninstallString;
 
     /// <summary>
     /// URL with information about the program.
     /// </summary>
-    public string? UrlInfoAbout { get => _urlInfoAbout; set { if (_urlInfoAbout == value) return; _urlInfoAbout = value; OnPropertyChanged(); } }
+    public string? UrlInfoAbout { get => _urlInfoAbout; set => SetProperty(ref _urlInfoAbout, value); }
     private string? _urlInfoAbout;
 
     /// <summary>
     /// URL for program updates information.
     /// </summary>
-    public string? UrlUpdateInfo { get => _urlUpdateInfo; set { if (_urlUpdateInfo == value) return; _urlUpdateInfo = value; OnPropertyChanged(); } }
+    public string? UrlUpdateInfo { get => _urlUpdateInfo; set => SetProperty(ref _urlUpdateInfo, value); }
     private string? _urlUpdateInfo;
 
     /// <summary>
     /// Major version number of the program.
     /// </summary>
-    public long VersionMajor { get => _versionMajor; set { if (_versionMajor == value) return; _versionMajor = value; OnPropertyChanged(); } }
-    private long _versionMajor = -1;
+    [RegistryNames("VersionMajor", "MajorVersion")]
+    public int VersionMajor { get => _versionMajor; set => SetProperty(ref _versionMajor, value); }
+    private int _versionMajor = -1;
 
     /// <summary>
     /// Minor version number of the program.
     /// </summary>
-    public long VersionMinor { get => _versionMinor; set { if (_versionMinor == value) return; _versionMinor = value; OnPropertyChanged(); } }
-    private long _versionMinor = -1;
+    [RegistryNames("VersionMinor", "MinorVersion")]
+    public int VersionMinor { get => _versionMinor; set => SetProperty(ref _versionMinor, value); }
+    private int _versionMinor = -1;
 
     /// <summary>
     /// Indicates whether the program was installed using Windows Installer.
     /// </summary>
-    public bool WindowsInstaller { get => _windowsInstaller; set { if (_windowsInstaller == value) return; _windowsInstaller = value; OnPropertyChanged(); } }
+    public bool WindowsInstaller { get => _windowsInstaller; set => SetProperty(ref _windowsInstaller, value); }
     private bool _windowsInstaller;
 
     /// <summary>
     /// Registry key associated with the program, if available.
     /// </summary>
-    public string? RegKey { get => _regKey; set { if (_regKey == value) return; _regKey = value; OnPropertyChanged(); } }
+    public string? RegKey { get => _regKey; set => SetProperty(ref _regKey, value); }
     private string? _regKey;
 
     /// <summary>
@@ -190,56 +203,48 @@ public class ProgramInfoData : INotifyPropertyChanged
     /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly IProgramInfoService _programInfoService;
-
-    /// <summary>
-    /// Initializes a new instance of the ProgramInfoData class.
-    /// </summary>
-    /// <param name="programInfoService">Service to handle program information logic.</param>
-    public ProgramInfoData(IProgramInfoService programInfoService) => _programInfoService = programInfoService;
-
     /// <summary>
     /// Updates the current instance with information from another ProgramInfoData instance.
     /// </summary>
     /// <param name="programInfoData">The ProgramInfoData instance to update from.</param>
-    public void UpdateFromDifferent(ProgramInfoData programInfoData) => _programInfoService.UpdateFromDifferent(this, programInfoData);
+    public void UpdateFromDifferent(IProgramInfoService programInfoService, ProgramInfoData programInfoData) => programInfoService.UpdateFromDifferent(this, programInfoData);
 
     /// <summary>
     /// Uninstalls the the program.
     /// </summary>
     /// <returns>A task that returns true if the uninstallation is successful.</returns>
-    public async Task<bool> Uninstall() => await _programInfoService.Uninstall(this);
+    public async Task<bool> Uninstall(IProgramInfoService programInfoService) => await programInfoService.Uninstall(this);
 
     /// <summary>
     /// Modifies the program.
     /// </summary>
     /// <returns>A task that returns true if the modification is successful.</returns>
-    public async Task<bool> Modify() => await _programInfoService.Modify(this);
+    public async Task<bool> Modify(IProgramInfoService programInfoService) => await programInfoService.Modify(this);
 
     /// <summary>
     /// Opens the registry entry associated with the program.
     /// </summary>
     /// <returns>A task that returns true if the registry is successfully opened.</returns>
-    public async Task<bool> OpenRegistry() => await _programInfoService.OpenRegistry(this);
+    public bool OpenRegistry(IProgramInfoService programInfoService) => programInfoService.OpenRegistry(this);
 
     /// <summary>
     /// Fetches fallback values for the program.
     /// </summary>
-    public void FetchFallbackProperties() => _programInfoService.FetchFallbackProperties(this);
+    public void FetchFallbackProperties(IProgramInfoService programInfoService) => programInfoService.FetchFallbackProperties(this);
 
     public override bool Equals(object? obj)
     {
         if (obj is null || obj is not ProgramInfoData programInfoData)
             return false;
 
-        foreach (PropertyInfo property in GetType().GetProperties())
+        foreach (var property in GetType().GetProperties())
         {
-            if (property.Name == nameof(DisplayIcon))
+            if (property.Name == nameof(DisplayIconImage))
                 continue;
             if (!Equals(property.GetValue(this), property.GetValue(programInfoData)))
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     public override int GetHashCode()
@@ -248,9 +253,9 @@ public class ProgramInfoData : INotifyPropertyChanged
         {
             var hash = 17;
 
-            foreach (PropertyInfo property in GetType().GetProperties())
+            foreach (var property in GetType().GetProperties())
             {
-                if (property.Name == nameof(DisplayIcon))
+                if (property.Name == nameof(DisplayIconImage))
                     continue;
 
                 var value = property.GetValue(this);
@@ -263,5 +268,23 @@ public class ProgramInfoData : INotifyPropertyChanged
 
     public override string? ToString() => DisplayName;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value))
+            return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
+
+    protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+}
+
+public class EstimatedSizePostProcess : RegistryDeserializerPostProcess<long>
+{
+    public override long Effect(long data)
+    {
+        var intVal = (uint)data;
+        return (long)(intVal * 1000);
+    }
 }

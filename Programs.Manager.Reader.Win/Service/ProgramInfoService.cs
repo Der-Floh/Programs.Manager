@@ -1,7 +1,7 @@
 ﻿using Programs.Manager.Common.Win.Data;
 using Programs.Manager.Common.Win.Service;
 using System.Diagnostics;
-using System.Reflection;
+using System.Drawing;
 
 namespace Programs.Manager.Reader.Win.Service;
 
@@ -10,15 +10,18 @@ public sealed class ProgramInfoService : IProgramInfoService
 {
     private const string CmdFileName = "cmd.exe";
     private const string RunAsAdminVerb = "runas";
-    private readonly IRegJumpService _regJumpService;
+    private readonly IRegistryService _registryService;
+    private readonly IIconLoaderService _iconLoaderService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ProgramInfoService"/> class.
     /// </summary>
-    /// <param name="regJumpService">The <see cref="IRegJumpService"/> object to use for registry operations.</param>
-    public ProgramInfoService(IRegJumpService regJumpService)
+    /// <param name="registryService">The <see cref="IRegistryService"/> object to use for registry operations.</param>
+    /// <param name="iconLoaderService">The <see cref="IIconLoaderService"/> object to use for icon operations.</param>
+    public ProgramInfoService(IRegistryService registryService, IIconLoaderService iconLoaderService)
     {
-        _regJumpService = regJumpService;
+        _registryService = registryService;
+        _iconLoaderService = iconLoaderService;
     }
 
     /// <summary>
@@ -26,8 +29,8 @@ public sealed class ProgramInfoService : IProgramInfoService
     /// </summary>
     public ProgramInfoService()
     {
-        var _embeddedResourceService = new EmbeddedResourceService();
-        _regJumpService = new RegJumpService(_embeddedResourceService);
+        _registryService = new RegistryService();
+        _iconLoaderService = new IconLoaderService();
     }
 
     public void FetchFallbackProperties(ProgramInfoData programInfoData)
@@ -38,8 +41,8 @@ public sealed class ProgramInfoService : IProgramInfoService
             {
                 var directoryInfo = new DirectoryInfo(programInfoData.InstallLocation);
                 long totalSize = 0;
-                FileInfo[] fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
-                foreach (FileInfo fileInfo in fileInfos)
+                var fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
+                foreach (var fileInfo in fileInfos)
                     totalSize += fileInfo.Length;
                 programInfoData.EstimatedSize = totalSize;
             }
@@ -49,7 +52,7 @@ public sealed class ProgramInfoService : IProgramInfoService
 
     public void UpdateFromDifferent(ProgramInfoData programInfoData, ProgramInfoData programInfoDataToCopy)
     {
-        foreach (PropertyInfo property in programInfoData.GetType().GetProperties())
+        foreach (var property in programInfoData.GetType().GetProperties())
         {
             var originalValue = property.GetValue(programInfoData);
             var updateValue = property.GetValue(programInfoDataToCopy);
@@ -76,7 +79,7 @@ public sealed class ProgramInfoService : IProgramInfoService
         return await RunProcess(CmdFileName, arguments);
     }
 
-    public async Task<bool> OpenRegistry(ProgramInfoData programInfoData) => !string.IsNullOrEmpty(programInfoData.RegKey) && await _regJumpService.OpenAt(programInfoData.RegKey);
+    public bool OpenRegistry(ProgramInfoData programInfoData) => !string.IsNullOrEmpty(programInfoData.RegKey) && _registryService.OpenAt(programInfoData.RegKey);
 
     private static async Task<bool> RunProcess(string processName, string? arguments = null)
     {
@@ -97,8 +100,20 @@ public sealed class ProgramInfoService : IProgramInfoService
             await process.WaitForExitAsync();
             return true;
         }
-        catch { return false; }
+        catch
+        {
+            return false;
+        }
     }
 
     public Task<bool> LoadIcon(ProgramInfoData programInfoData) => throw new NotImplementedException();
+
+    public Bitmap? GetIcon(ProgramInfoData programInfoData)
+    {
+        try
+        {
+            return _iconLoaderService.GetIcon(programInfoData);
+        }
+        catch { return null; }
+    }
 }

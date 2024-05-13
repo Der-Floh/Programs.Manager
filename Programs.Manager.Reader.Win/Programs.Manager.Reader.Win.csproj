@@ -21,13 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ico.Reader" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+    <PackageReference Include="Ico.Reader" Version="1.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RegistrySerializer\RegistrySerializer\WindowsRegistry.Serializer.csproj" />
     <ProjectReference Include="..\Programs.Manager.Common.Win\Programs.Manager.Common.Win.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\ProgramInfo\" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,11 @@ public interface IProgramInfoRepository
     /// <summary>
     /// Retrieves all program information and optionally performs an action on each item.
     /// </summary>
-    /// <param name="action">An optional action to perform on each <see cref="ProgramRegInfoData"/> item.</param>
     /// <returns>An enumerable collection of <see cref="ProgramInfoData"/>.</returns>
-    IEnumerable<ProgramInfoData> GetAll(Action<ProgramRegInfoData>? action = null);
+    IEnumerable<ProgramInfoData> GetAll();
+
+    /// <summary>
+    /// Occurs when a new <see cref="ProgramInfoData"/> is received.
+    /// </summary>
+    public event ProgramInfoDataReceivedEvent OnProgramInfoDataReceived;
 }

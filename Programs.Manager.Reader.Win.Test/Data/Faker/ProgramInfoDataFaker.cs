@@ -14,14 +14,14 @@ public sealed class ProgramInfoDataFaker : Faker<ProgramInfoData>
         var displayIcon = new Bitmap(32, 32);
         using var gfx = Graphics.FromImage(displayIcon);
         gfx.Clear(Color.Green);
-        RuleFor(x => x.DisplayIcon, displayIcon);
+        RuleFor(x => x.DisplayIconImage, displayIcon);
         RuleFor(x => x.DisplayName, f => f.Commerce.ProductName());
         var version = FakerHub.System.Version();
         RuleFor(x => x.DisplayVersion, f => version.ToString());
         RuleFor(x => x.EstimatedSize, f => f.Random.Long(10, 20000000));
         RuleFor(x => x.HelpLink, f => f.Internet.Url());
         RuleFor(x => x.HelpTelephone, f => f.Phone.PhoneNumber());
-        RuleFor(x => x.InstallDate, f => f.Date.Past().ToString());
+        RuleFor(x => x.InstallDate, f => f.Date.Past());
         RuleFor(x => x.InstallLocation, f => f.System.DirectoryPath());
         RuleFor(x => x.InstallSource, f => f.System.FilePath());
         RuleFor(x => x.Language, f => f.Random.RandomLocale());

@@ -2,6 +2,13 @@
 
 namespace Programs.Manager.Common.Win.Repository;
 
+public delegate void ProgramInfoDataReceivedEvent(object sender, ProgramInfoDataEventArgs args);
+
+public class ProgramInfoDataEventArgs : EventArgs
+{
+    public ProgramInfoData ProgramInfoData { get; set; }
+}
+
 /// <summary>
 /// Repository for retrieving and processing information about installed programs.
 /// </summary>
@@ -10,7 +17,11 @@ public interface IProgramInfoDataRepository
     /// <summary>
     /// Retrieves all program information and optionally performs an action on each item.
     /// </summary>
-    /// <param name="action">An optional action to perform on each <see cref="ProgramRegInfoData"/> item.</param>
     /// <returns>An enumerable collection of <see cref="ProgramInfoData"/>.</returns>
-    IEnumerable<ProgramInfoData> GetAll(Action<ProgramRegInfoData>? action = null);
+    IEnumerable<ProgramInfoData> GetAll();
+
+    /// <summary>
+    /// Occurs when a new <see cref="ProgramInfoData"/> is received.
+    /// </summary>
+    public event ProgramInfoDataReceivedEvent OnProgramInfoDataReceived;
 }

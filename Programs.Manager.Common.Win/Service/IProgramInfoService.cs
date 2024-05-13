@@ -1,4 +1,5 @@
 ﻿using Programs.Manager.Common.Win.Data;
+using System.Drawing;
 
 namespace Programs.Manager.Common.Win.Service;
 
@@ -19,8 +20,8 @@ public interface IProgramInfoService
     /// Opens the registry editor at the specified registry key of a program.
     /// </summary>
     /// <param name="programInfoData">The program information data containing the registry key.</param>
-    /// <returns>A task representing the asynchronous operation, returning true if successful.</returns>
-    Task<bool> OpenRegistry(ProgramInfoData programInfoData);
+    /// <returns>True if opening was successful.</returns>
+    bool OpenRegistry(ProgramInfoData programInfoData);
 
     /// <summary>
     /// Uninstalls a program using its uninstall string.
@@ -49,4 +50,11 @@ public interface IProgramInfoService
     /// </summary>
     /// <param name="programInfoData"></param>
     void FetchFallbackProperties(ProgramInfoData programInfoData);
+
+    /// <summary>
+    /// Fetches the Icon for a <see cref="ProgramInfoData"/> object.
+    /// </summary>
+    /// <param name="programInfoData">The program information for which to load the Icon.</param>
+    /// <returns>The Icon for the program.</returns>
+    Bitmap? GetIcon(ProgramInfoData programInfoData);
 }
