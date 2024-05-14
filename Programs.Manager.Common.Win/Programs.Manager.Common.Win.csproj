@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RegistrySerializer\RegistrySerializer\WindowsRegistry.Serializer.csproj" />
+    <ProjectReference Include="..\WindowsRegistry.Serializer\WindowsRegistry.Serializer.csproj" />
   </ItemGroup>
 
 </Project>

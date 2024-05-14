@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RegistrySerializer\RegistrySerializer\WindowsRegistry.Serializer.csproj" />
     <ProjectReference Include="..\Programs.Manager.Common.Win\Programs.Manager.Common.Win.csproj" />
+    <ProjectReference Include="..\WindowsRegistry.Serializer\WindowsRegistry.Serializer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
