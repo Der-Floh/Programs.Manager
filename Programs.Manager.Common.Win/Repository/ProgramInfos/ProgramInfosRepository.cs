@@ -1,13 +1,13 @@
 ﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Win.Repository.ProgramInfo;
+namespace Programs.Manager.Common.Win.Repository.ProgramInfos;
 
-public class ProgramInfoRepository : IProgramInfoRepository
+public class ProgramInfosRepository : IProgramInfosRepository
 {
     private readonly IEnumerable<IProgramInfoDataRepository> _programInfoDataRepositories;
     public event ProgramInfoDataReceivedEvent OnProgramInfoDataReceived;
 
-    public ProgramInfoRepository(IEnumerable<IProgramInfoDataRepository> programInfoDataRepositories)
+    public ProgramInfosRepository(IEnumerable<IProgramInfoDataRepository> programInfoDataRepositories)
     {
         _programInfoDataRepositories = programInfoDataRepositories;
         foreach (var repository in _programInfoDataRepositories)

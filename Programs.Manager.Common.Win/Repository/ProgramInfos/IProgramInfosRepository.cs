@@ -1,11 +1,11 @@
 ﻿using Programs.Manager.Common.Win.Data;
 
-namespace Programs.Manager.Common.Win.Repository.ProgramInfo;
+namespace Programs.Manager.Common.Win.Repository.ProgramInfos;
 
 /// <summary>
 /// Repository for retrieving and processing information about installed programs.
 /// </summary>
-public interface IProgramInfoRepository
+public interface IProgramInfosRepository
 {
     /// <summary>
     /// Retrieves all program information and optionally performs an action on each item.

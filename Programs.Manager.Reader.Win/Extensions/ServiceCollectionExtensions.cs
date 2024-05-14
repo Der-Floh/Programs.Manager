@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Programs.Manager.Common.Win.Repository;
-using Programs.Manager.Common.Win.Repository.ProgramInfo;
+using Programs.Manager.Common.Win.Repository.ProgramInfos;
 using Programs.Manager.Common.Win.Service;
 using Programs.Manager.Reader.Win.Repository.ProgramInfo;
 using Programs.Manager.Reader.Win.Service;
@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     /// This method registers the following services:<br/>
     /// - <see cref="IProgramInfoDataRepository"/> implemented by <see cref="ProgramInfoDataRepository"/>.<br/>
     /// - <see cref="IProgramInfoService"/> implemented by <see cref="ProgramInfoService"/>.<br/>
-    /// - <see cref="IProgramInfoRepository"/> implemented by <see cref="ProgramInfoRepository"/>.<br/>
+    /// - <see cref="IProgramInfosRepository"/> implemented by <see cref="ProgramInfosRepository"/>.<br/>
     /// - <see cref="IWindowsLanguageService"/> implemented by <see cref="WindowsLanguageService"/>.<br/>
     /// - <see cref="IRegistryService"/> implemented by <see cref="RegistryService"/>.<br/>
     /// - <see cref="IEmbeddedResourceService"/> implemented by <see cref="EmbeddedResourceService"/>.<br/>
@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IProgramInfoDataRepository, ProgramInfoDataRepository>();
         services.AddSingleton<IProgramInfoService, ProgramInfoService>();
-        services.AddSingleton<IProgramInfoRepository, ProgramInfoRepository>();
+        services.AddSingleton<IProgramInfosRepository, ProgramInfosRepository>();
         services.AddSingleton<IWindowsLanguageService, WindowsLanguageService>();
         services.AddSingleton<IRegistryService, RegistryService>();
         services.AddSingleton<IEmbeddedResourceService, EmbeddedResourceService>();

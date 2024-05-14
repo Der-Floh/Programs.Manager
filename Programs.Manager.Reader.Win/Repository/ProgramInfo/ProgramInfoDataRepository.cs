@@ -75,7 +75,7 @@ public sealed class ProgramInfoDataRepository : IProgramInfoDataRepository
         }
 
         var programInfos = new List<ProgramInfoData>();
-        var programKeyNames = _registryService.GetSubKeyNames(locationPath) ?? Array.Empty<string>();
+        var programKeyNames = _registryService.GetSubKeyNames(locationPath)?.Where(x => !string.IsNullOrEmpty(x)) ?? Array.Empty<string>();
         foreach (var programKeyName in programKeyNames)
         {
             var regPath = Path.Combine(locationPath, programKeyName);
