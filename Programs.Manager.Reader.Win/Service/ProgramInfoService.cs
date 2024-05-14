@@ -37,16 +37,24 @@ public sealed class ProgramInfoService : IProgramInfoService
     {
         if (programInfoData.EstimatedSize == -1 && !string.IsNullOrEmpty(programInfoData.InstallLocation))
         {
-            try
-            {
-                var directoryInfo = new DirectoryInfo(programInfoData.InstallLocation);
-                long totalSize = 0;
-                var fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
-                foreach (var fileInfo in fileInfos)
-                    totalSize += fileInfo.Length;
-                programInfoData.EstimatedSize = totalSize;
-            }
-            catch { }
+            programInfoData.EstimatedSize = GetProgramSize(programInfoData.InstallLocation);
+        }
+    }
+
+    private long GetProgramSize(string installLocation)
+    {
+        try
+        {
+            var directoryInfo = new DirectoryInfo(installLocation);
+            long totalSize = 0;
+            var fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
+            foreach (var fileInfo in fileInfos)
+                totalSize += fileInfo.Length;
+            return totalSize;
+        }
+        catch
+        {
+            return -1;
         }
     }
 

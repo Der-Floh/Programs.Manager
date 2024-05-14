@@ -9,12 +9,14 @@ public sealed class ProgramInfoDataFaker : Faker<ProgramInfoData>
     public ProgramInfoDataFaker()
     {
         RuleFor(x => x.Id, f => f.Random.Guid().ToString());
+        RuleFor(x => x.AuthorizedCDFPrefix, f => f.Internet.Url());
         RuleFor(x => x.Comments, f => f.Lorem.Sentence());
         RuleFor(x => x.Contact, f => f.Phone.PhoneNumber());
         var displayIcon = new Bitmap(32, 32);
         using var gfx = Graphics.FromImage(displayIcon);
         gfx.Clear(Color.Green);
         RuleFor(x => x.DisplayIconImage, displayIcon);
+        RuleFor(x => x.DisplayIcon, f => f.System.FilePath());
         RuleFor(x => x.DisplayName, f => f.Commerce.ProductName());
         var version = FakerHub.System.Version();
         RuleFor(x => x.DisplayVersion, f => version.ToString());
