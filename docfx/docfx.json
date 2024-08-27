@@ -7,7 +7,7 @@
       "EnumSortOrder": "declaringOrder",
       "src": [
         {
-          "src": "../../",
+          "src": "../",
           "files": [
             "**/*.csproj"
           ],
@@ -45,8 +45,8 @@
     ],
     "globalMetadata": {
       "homepage": "docs/introduction.md",
-      "_appName": "Windows-Programs-Reader",
-      "_appTitle": "Windows-Programs-Reader",
+      "_appName": "Program-Infos-Manager",
+      "_appTitle": "Program-Infos-Manager",
       "_appLogoPath": "images/logo-x64.png",
       "_appFaviconPath": "images/favicon.ico",
       "_appFooter": "<strong>Made with DocFX</strong>",
