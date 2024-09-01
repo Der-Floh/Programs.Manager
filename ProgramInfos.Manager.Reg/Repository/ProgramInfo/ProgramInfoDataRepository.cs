@@ -139,9 +139,10 @@ public sealed class ProgramInfoDataRepository : IProgramInfoDataRepository
     {
         try
         {
-            programInfoData.DisplayIconPath = string.IsNullOrEmpty(programInfoData.DisplayIcon)
-                ? _programInfoService.GetIconPath(programInfoData)
-                : programInfoData.DisplayIcon;
+            if (!string.IsNullOrEmpty(programInfoData.DisplayIcon))
+            {
+                programInfoData.DisplayIconInfo = _programInfoService.GetIconInfo(programInfoData);
+            }
         }
         catch (Exception ex)
         {

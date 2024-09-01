@@ -38,11 +38,11 @@ public interface IProgramInfoDataSourceService
     void OpenLocationSource(IProgramInfoData programInfoData);
 
     /// <summary>
-    /// Fetches the icon path for the program info
+    /// Fetches the icon information for the program info
     /// </summary>
     /// <param name="programInfoData">The <see cref="IProgramInfoData"/> for which the icon path should be fetched.</param>
-    /// <returns>A string representing the icon path.</returns>
-    string? GetIconPath(IProgramInfoData programInfoData);
+    /// <returns>An <see cref="IIconInfo"/> containing the icon information.</returns>
+    IIconInfo? GetIconInfo(IProgramInfoData programInfoData);
 
     /// <summary>
     /// Fetches fallback values for the program.

@@ -1,5 +1,4 @@
 ﻿using ProgramInfos.Manager.Abstractions.Data;
-using ProgramInfos.Manager.Reg.Data;
 
 namespace ProgramInfos.Manager.Reg.Service.IconLoader;
 
@@ -9,9 +8,9 @@ namespace ProgramInfos.Manager.Reg.Service.IconLoader;
 public interface IIconFinderService
 {
     /// <summary>
-    /// Retrieves the icon path for the program based on its properties.
+    /// Fetches the icon information for the program info
     /// </summary>
-    /// <param name="programRegInfoData">The <see cref="IProgramInfoData"/> object for which to get the icon path.</param>
-    /// <returns>A string representing the icon path or null if no icon file could be found.</returns>
-    string? GetIconPath(ProgramInfoData programInfoData);
+    /// <param name="programInfoData">The <see cref="IProgramInfoData"/> for which the icon path should be fetched.</param>
+    /// <returns>An <see cref="IIconInfo"/> containing the icon information.</returns>
+    IIconInfo? GetIconInfo(IProgramInfoData programInfoData);
 }

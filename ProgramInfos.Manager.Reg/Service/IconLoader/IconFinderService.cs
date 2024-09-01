@@ -1,4 +1,5 @@
-﻿using ProgramInfos.Manager.Reg.Data;
+﻿using ProgramInfos.Manager.Abstractions.Data;
+using ProgramInfos.Manager.Reg.Data;
 using ProgramInfos.Manager.Reg.Extensions;
 
 namespace ProgramInfos.Manager.Reg.Service.IconLoader;
@@ -7,23 +8,30 @@ namespace ProgramInfos.Manager.Reg.Service.IconLoader;
 public sealed class IconFinderService : IIconFinderService
 {
     /// <inheritdoc/>
-    public string? GetIconPath(ProgramInfoData programInfoData)
+    public IIconInfo? GetIconInfo(IProgramInfoData iProgramInfoData)
     {
         //if (!string.IsNullOrEmpty(programInfoData.DisplayName) && programInfoData.DisplayName.ToLower().Contains("7-zip"))
         //{ }
 
-        string? iconPath = null;
+        if (iProgramInfoData is not ProgramInfoData programInfoData)
+            return null;
+
+        var iconInfo = new IconInfo();
 
         try
         {
-            if (!string.IsNullOrEmpty(programInfoData.DisplayIcon))
-                iconPath = GetIconPathFromDisplayIconPath(programInfoData.DisplayIcon);
-            if (iconPath is null && !string.IsNullOrEmpty(programInfoData.DisplayName))
+            if (!string.IsNullOrEmpty(programInfoData.DisplayIconInfo?.Path))
+            {
+                iconInfo = GetIconInfoFromPath(programInfoData.DisplayIconInfo.Path);
+                iconInfo ??= new IconInfo();
+                iconInfo.Path = GetIconPathFromDisplayIconPath(programInfoData.DisplayIconInfo.Path);
+            }
+            if (string.IsNullOrEmpty(iconInfo.Path) && !string.IsNullOrEmpty(programInfoData.DisplayName))
             {
                 if (!string.IsNullOrEmpty(programInfoData.Id) && programInfoData.Id.StartsWith('{') && programInfoData.Id.EndsWith('}'))
-                    iconPath = GetIconPathFromWindowsInstallerCache(programInfoData.Id, programInfoData.DisplayName);
-                if (iconPath is null && !string.IsNullOrEmpty(programInfoData.InstallLocation))
-                    iconPath = GetIconPathFromAppDirectory(programInfoData.InstallLocation, programInfoData.DisplayName);
+                    iconInfo.Path = GetIconPathFromWindowsInstallerCache(programInfoData.Id, programInfoData.DisplayName);
+                if (iconInfo.Path is null && !string.IsNullOrEmpty(programInfoData.InstallLocation))
+                    iconInfo.Path = GetIconPathFromAppDirectory(programInfoData.InstallLocation, programInfoData.DisplayName);
             }
         }
         catch (Exception ex)
@@ -31,19 +39,30 @@ public sealed class IconFinderService : IIconFinderService
             Console.WriteLine(ex);
         }
 
-        return iconPath;
+        return iconInfo;
     }
 
-    private string? GetIconPathFromDisplayIconPath(string displayIcon)
+    private static IconInfo? GetIconInfoFromPath(string displayIcon)
+    {
+        var extension = Path.GetExtension(displayIcon).ToLower();
+        return extension.Contains(".ico") || extension.Contains(".exe") || string.IsNullOrEmpty(extension)
+            ? SplitIconIndex(displayIcon)
+            : null;
+    }
+
+    private static string? GetIconPathFromDisplayIconPath(string displayIcon)
     {
         string? iconPath = null;
         var extension = Path.GetExtension(displayIcon).ToLower();
         if (extension.Contains(".ico") || extension.Contains(".exe") || string.IsNullOrEmpty(extension))
         {
-            (var iconPathTemp, var iconIndex) = SplitIconIndex(displayIcon);
-            iconPathTemp = iconPathTemp.Trim('"');
-            if (File.Exists(iconPathTemp))
-                iconPath = iconPathTemp;
+            var iconInfo = SplitIconIndex(displayIcon);
+            if (!string.IsNullOrEmpty(iconInfo?.Path))
+            {
+                iconInfo.Path = iconInfo.Path.Trim('"');
+                if (File.Exists(iconInfo.Path))
+                    iconPath = iconInfo.Path;
+            }
         }
         else if (extension.Contains(".jpg") || extension.Contains(".jpeg") || extension.Contains(".png"))
         {
@@ -145,30 +164,27 @@ public sealed class IconFinderService : IIconFinderService
         return similarFileWithName is null ? similarFileWithIcon : similarFileWithName;
     }
 
-    public static (string newFilePath, IconIndex? iconIndex) SplitIconIndex(string filePath)
+    public static IconInfo? SplitIconIndex(string filePath)
     {
         var index = filePath.LastIndexOf(',');
         if (index == -1)
+            return null;
+
+        var iconInfo = new IconInfo
         {
-            return (filePath, null);
+            Path = filePath[..index]
+        };
+        var success = int.TryParse(filePath.AsSpan(index + 1), out var parsedIndex);
+        if (success)
+        {
+            if (parsedIndex < 0)
+                iconInfo.GroupName = Math.Abs(parsedIndex).ToString();
+            iconInfo.Index = parsedIndex;
         }
         else
         {
-            var cleanedFilePath = filePath[..index];
-            var success = int.TryParse(filePath.AsSpan(index + 1), out var parsedIndex);
-            var iconIndex = new IconIndex();
-            if (success)
-            {
-                if (parsedIndex < 0)
-                    iconIndex.GroupName = Math.Abs(parsedIndex).ToString();
-                else
-                    iconIndex.Index = parsedIndex;
-            }
-            else
-            {
-                iconIndex.GroupName = filePath.AsSpan(index + 1).ToString();
-            }
-            return (cleanedFilePath, iconIndex);
+            iconInfo.GroupName = filePath.AsSpan(index + 1).ToString();
         }
+        return iconInfo;
     }
 }

@@ -63,7 +63,7 @@ public class ProgramInfoDataService : IProgramInfoDataSourceService
     public void OpenLocationSource(IProgramInfoData programInfoData) => _registryService.OpenAt(programInfoData.RegKey);
 
     /// <inheritdoc/>
-    public string? GetIconPath(IProgramInfoData programInfoData) => _iconLoaderService.GetIconPath((ProgramInfoData)programInfoData);
+    public IIconInfo? GetIconInfo(IProgramInfoData programInfoData) => _iconLoaderService.GetIconInfo((ProgramInfoData)programInfoData);
 
     /// <inheritdoc/>
     public void FetchFallbackProperties(IProgramInfoData programInfoData)

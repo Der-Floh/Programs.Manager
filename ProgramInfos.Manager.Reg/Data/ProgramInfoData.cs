@@ -42,22 +42,10 @@ public class ProgramInfoData : IProgramInfoData
 
     /// <inheritdoc/>
     [RegistryIgnore]
-    public string? DisplayIconPath { get => _displayIconPath; set => SetProperty(ref _displayIconPath, value); }
-    private string? _displayIconPath;
+    public IIconInfo? DisplayIconInfo { get => _displayIconInfo; set => SetProperty(ref _displayIconInfo, value); }
+    private IIconInfo? _displayIconInfo;
 
     /// <inheritdoc/>
-    [RegistryIgnore]
-    public int DisplayIconIndex { get => _displayIconIndex; set => SetProperty(ref _displayIconIndex, value); }
-    private int _displayIconIndex;
-
-    /// <inheritdoc/>
-    [RegistryIgnore]
-    public string? DisplayIconGroupName { get => _displayIconGroupName; set => SetProperty(ref _displayIconGroupName, value); }
-    private string? _displayIconGroupName;
-
-    /// <summary>
-    /// Path to the icon representing the program, if available.
-    /// </summary>
     public string? DisplayIcon { get => _displayIcon; set => SetProperty(ref _displayIcon, value); }
     private string? _displayIcon;
 

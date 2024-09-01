@@ -20,7 +20,7 @@ public partial class IconLoaderService : IIconLoaderService
     }
 
     /// <inheritdoc/>
-    public MemoryStream? GetIcon(IProgramInfoData programInfoData) => GetIconFromFile(programInfoData.DisplayIconPath, programInfoData.DisplayIconIndex, programInfoData.DisplayIconGroupName);
+    public MemoryStream? GetIcon(IProgramInfoData programInfoData) => GetIconFromFile(programInfoData.DisplayIconInfo);
 
     /// <summary>
     /// Loads an Icon from a file.
@@ -29,30 +29,30 @@ public partial class IconLoaderService : IIconLoaderService
     /// <param name="iconIndex">Optional. The index of the icon inside the icon file.</param>
     /// <param name="groupName">Optional. The name of the icon group for which the index should be used.</param>
     /// <returns>A <see cref="MemoryStream"/> containing the image data.</returns>
-    private MemoryStream? GetIconFromFile(string? iconPath, int iconIndex = -1, string? groupName = null)
+    private MemoryStream? GetIconFromFile(IIconInfo iconInfo)
     {
-        if (string.IsNullOrEmpty(iconPath))
+        if (string.IsNullOrEmpty(iconInfo.Path))
             return null;
 
-        var iconData = _iconReader.Read(iconPath);
+        var iconData = _iconReader.Read(iconInfo.Path);
         if (iconData is null)
             return null;
 
         byte[]? iconBytes = null;
         var index = 0;
-        if (iconIndex != -1)
+        if (iconInfo.Index != -1)
         {
-            if (iconIndex >= 0 && iconIndex < iconData.ImageReferences.Count)
+            if (iconInfo.Index >= 0 && iconInfo.Index < iconData.ImageReferences.Count)
             {
-                if (string.IsNullOrEmpty(groupName))
-                    groupName = FindImageRefGroupName(iconData, iconIndex)!;
-                index = iconData.PreferredImageIndex(groupName);
+                if (string.IsNullOrEmpty(iconInfo.GroupName))
+                    iconInfo.GroupName = FindImageRefGroupName(iconData, iconInfo.Index)!;
+                index = iconData.PreferredImageIndex(iconInfo.GroupName);
 
                 iconBytes = iconData.GetImage(index);
             }
-            else if (!string.IsNullOrEmpty(groupName))
+            else if (!string.IsNullOrEmpty(iconInfo.GroupName))
             {
-                var iconGroup = iconData.Groups.FirstOrDefault(x => x.Name == groupName);
+                var iconGroup = iconData.Groups.FirstOrDefault(x => x.Name == iconInfo.GroupName);
                 if (iconGroup is not null)
                     iconBytes = iconData.GetImage(iconData.PreferredImageIndex(iconGroup.Name));
             }

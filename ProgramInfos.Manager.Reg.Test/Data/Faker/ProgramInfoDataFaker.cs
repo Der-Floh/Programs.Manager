@@ -19,9 +19,8 @@ public sealed class ProgramInfoDataFaker : Faker<ProgramInfoData>
         var memoryStream = new MemoryStream();
         displayIcon.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
         RuleFor(x => x.DisplayIconStream, memoryStream);
-        RuleFor(x => x.DisplayIconIndex, f => f.Random.Int(0, 10));
-        RuleFor(x => x.DisplayIconGroupName, f => f.Commerce.Department());
-        RuleFor(x => x.DisplayIconPath, f => f.System.FilePath());
+        RuleFor(x => x.DisplayIconInfo, f => new IconInfo { Path = f.System.FilePath(), Index = f.Random.Int(0, 10), GroupName = f.Commerce.Department() });
+        RuleFor(x => x.DisplayIcon, f => f.System.FilePath());
         RuleFor(x => x.DisplayIcon, f => f.System.FilePath());
         RuleFor(x => x.DisplayName, f => f.Commerce.ProductName());
         var version = FakerHub.System.Version();
@@ -33,7 +32,7 @@ public sealed class ProgramInfoDataFaker : Faker<ProgramInfoData>
         RuleFor(x => x.InstallLocation, f => f.System.DirectoryPath());
         RuleFor(x => x.InstallSource, f => f.System.FilePath());
         RuleFor(x => x.Language, f => f.Random.RandomLocale());
-        RuleFor(x => x.CultureInfo, f => new CultureInfo(f.Random.Int(1, 2000)));
+        RuleFor(x => x.CultureInfo, new CultureInfo(1032));
         RuleFor(x => x.ModifyPath, f => f.System.FilePath());
         RuleFor(x => x.NoModify, f => f.Random.Bool());
         RuleFor(x => x.NoRemove, f => f.Random.Bool());

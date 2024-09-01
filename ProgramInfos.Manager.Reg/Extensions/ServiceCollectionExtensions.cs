@@ -4,7 +4,6 @@ using ProgramInfos.Manager.Abstractions.Service;
 using ProgramInfos.Manager.Reg.Repository.ProgramInfo;
 using ProgramInfos.Manager.Reg.Service;
 using ProgramInfos.Manager.Reg.Service.CRegistry;
-using ProgramInfos.Manager.Reg.Service.EmbeddedResource;
 using ProgramInfos.Manager.Reg.Service.IconLoader;
 
 namespace ProgramInfos.Manager.Reg.Extensions;
@@ -17,7 +16,6 @@ public class ServiceCollectionExtensions : IServiceCollectionRegister
     {
         services.AddSingleton<IProgramInfoDataRepository, ProgramInfoDataRepository>();
         services.AddSingleton<IRegistryService, RegistryService>();
-        services.AddSingleton<IEmbeddedResourceService, EmbeddedResourceService>();
         services.AddSingleton<IIconFinderService, IconFinderService>();
         services.AddSingleton<IProgramInfoDataSourceService, ProgramInfoDataService>();
     }

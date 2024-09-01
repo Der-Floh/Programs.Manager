@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\languages.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\languages.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Ico.Reader" Version="1.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
     <PackageReference Include="WindowsRegistry.Serializer" Version="1.0.0" />
@@ -22,6 +14,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProgramInfos.Manager.Abstractions\ProgramInfos.Manager.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

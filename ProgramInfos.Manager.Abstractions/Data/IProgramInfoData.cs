@@ -39,19 +39,9 @@ public interface IProgramInfoData : INotifyPropertyChanged
     public MemoryStream? DisplayIconStream { get; set; }
 
     /// <summary>
-    /// Path to the icon representing the program, if available.
+    /// Icon information of the program, if available.
     /// </summary>
-    public string? DisplayIconPath { get; set; }
-
-    /// <summary>
-    /// Index of the icon representing the program, if available.
-    /// </summary>
-    public int DisplayIconIndex { get; set; }
-
-    /// <summary>
-    /// Group name of the icon representing the program, if available.
-    /// </summary>
-    public string? DisplayIconGroupName { get; set; }
+    public IIconInfo? DisplayIconInfo { get; set; }
 
     /// <summary>
     /// Display name of the program as registered in the system, if available.
