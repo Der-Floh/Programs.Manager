@@ -29,9 +29,9 @@ public partial class IconLoaderService : IIconLoaderService
     /// <param name="iconIndex">Optional. The index of the icon inside the icon file.</param>
     /// <param name="groupName">Optional. The name of the icon group for which the index should be used.</param>
     /// <returns>A <see cref="MemoryStream"/> containing the image data.</returns>
-    private MemoryStream? GetIconFromFile(IIconInfo iconInfo)
+    private MemoryStream? GetIconFromFile(IIconInfo? iconInfo)
     {
-        if (string.IsNullOrEmpty(iconInfo.Path))
+        if (string.IsNullOrEmpty(iconInfo?.Path))
             return null;
 
         var iconData = _iconReader.Read(iconInfo.Path);
