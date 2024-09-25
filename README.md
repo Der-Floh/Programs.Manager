@@ -10,6 +10,7 @@ Welcome to the documentation for the Program-Infos-Manager. This class library i
 - **Compatibility and Performance**: Optimized for Windows environments but also supporting other operating systems, ensuring compatibility and high performance.
 
 ### Windows Registry Plugin
+The Library comes already with the **Windows Registry Plugin**
 - **Registry Data Extraction**: Seamlessly extracts program information from various registry keys, especially focusing on installed program details.
 - **Class-Based Representation**: Converts registry data into well-structured C# classes, making it easy to handle and manipulate program data within your applications.
 
