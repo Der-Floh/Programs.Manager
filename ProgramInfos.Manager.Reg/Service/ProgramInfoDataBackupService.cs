@@ -7,15 +7,21 @@ using WindowsRegistry.Serializer;
 
 namespace ProgramInfos.Manager.Reg.Service;
 
+/// <inheritdoc />
 public sealed class ProgramInfoDataBackupService : IProgramInfoDataBackupSourceService
 {
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProgramInfoDataBackupService"/> class with the specified <see cref="JsonSerializerOptions"/>.
+    /// </summary>
+    /// <param name="jsonSerializerOptions"></param>
     public ProgramInfoDataBackupService(JsonSerializerOptions jsonSerializerOptions)
     {
         _jsonSerializerOptions = jsonSerializerOptions;
     }
 
+    /// <inheritdoc />
     public async Task<bool> CreateBackup(IEnumerable<IProgramInfoData> programInfos, string backupFolderPath)
     {
         try
@@ -33,6 +39,7 @@ public sealed class ProgramInfoDataBackupService : IProgramInfoDataBackupSourceS
         }
     }
 
+    /// <inheritdoc />
     public void DeleteBackup(string backupFolderPath, IProgramInfoDataBackup programInfoDataBackup)
     {
         var backupInfosFilePath = Path.Combine(backupFolderPath, $"{ProgramInfoData.SourceKeyName.SanitizeFileName().Replace(' ', '-')}.json");
@@ -49,6 +56,7 @@ public sealed class ProgramInfoDataBackupService : IProgramInfoDataBackupSourceS
         File.Delete(backupFilePath);
     }
 
+    /// <inheritdoc />
     public async Task<bool> RestoreBackup(string backupFolderPath, IProgramInfoDataBackup programInfoDataBackup)
     {
         try
@@ -69,6 +77,7 @@ public sealed class ProgramInfoDataBackupService : IProgramInfoDataBackupSourceS
         }
     }
 
+    /// <inheritdoc />
     public async Task<bool> RestoreLatestBackup(string backupFolderPath)
     {
         try
@@ -96,6 +105,10 @@ public sealed class ProgramInfoDataBackupService : IProgramInfoDataBackupSourceS
         }
     }
 
+    /// <summary>
+    /// Restores a backup.
+    /// </summary>
+    /// <param name="programInfos">The IEnumerable of <see cref="ProgramInfoData"/> to restore.</param>
     private static void RestoreBackup(IEnumerable<ProgramInfoData> programInfos)
     {
         foreach (var programInfo in programInfos)
