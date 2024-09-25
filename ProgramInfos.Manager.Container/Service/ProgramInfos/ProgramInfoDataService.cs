@@ -4,14 +4,10 @@ using ProgramInfos.Manager.Abstractions.Service;
 namespace ProgramInfos.Manager.Container.Service.ProgramInfos;
 
 /// <inheritdoc cref="IProgramInfoDataService"/>
-public class ProgramInfoDataService : IProgramInfoDataService
+public sealed class ProgramInfoDataService : IProgramInfoDataService
 {
     private readonly IEnumerable<IProgramInfoDataSourceService> _programInfoDataServices;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ProgramInfoDataService"/> class.
-    /// </summary>
-    /// <param name="programInfoDataServices">An IEnumerable of <see cref="IProgramInfoDataSourceService"/> for all plugins.</param>
     public ProgramInfoDataService(IEnumerable<IProgramInfoDataSourceService> programInfoDataServices)
     {
         _programInfoDataServices = programInfoDataServices;

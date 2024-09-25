@@ -5,7 +5,7 @@ using ProgramInfos.Manager.Abstractions.Repository;
 namespace ProgramInfos.Manager.Reg.Repository.ProgramInfoSource;
 
 /// <inheritdoc cref="IProgramInfoDataSourceRepository"/>
-public class ProgramInfoDataSourceRepository : IProgramInfoDataSourceRepository
+public sealed class ProgramInfoDataSourceRepository : IProgramInfoDataSourceRepository
 {
     private readonly ProgramInfo.IProgramInfoDataRepository _programInfoDataRepository;
 

@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramInfos.Manager.Abstra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramInfos.Manager.Container", "ProgramInfos.Manager.Container\ProgramInfos.Manager.Container.csproj", "{A799A5D2-F987-4C1A-B73A-6D6798BAE5A7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EECB367-FEC6-4872-871F-16B104658126}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		spell-exclusion.dic = spell-exclusion.dic
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

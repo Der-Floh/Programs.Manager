@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace ProgramInfos.Manager.Reg.Service;
 
 /// <inheritdoc cref="IProgramInfoDataSourceService"/>
-public class ProgramInfoDataService : IProgramInfoDataSourceService
+public sealed class ProgramInfoDataService : IProgramInfoDataSourceService
 {
     private const string CmdFileName = "cmd.exe";
     private const string ExplorerFileName = "explorer.exe";

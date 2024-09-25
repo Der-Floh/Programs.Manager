@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProgramInfos.Manager.Abstractions.Data;
+using ProgramInfos.Manager.Abstractions.Events;
 using ProgramInfos.Manager.Abstractions.Repository;
 using ProgramInfos.Manager.Abstractions.Service;
 using ProgramInfos.Manager.Container.Repository;
@@ -14,6 +15,8 @@ namespace ProgramInfos.Manager.Container;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
+    public static event ImplementationLoadedEvent? ImplementationLoadedEvent;
+
     private const string _dllFilesFolder = "Plugins";
     private static readonly string[] _excludedAssemblies = [
         "System",
@@ -40,11 +43,18 @@ public static class ServiceCollectionExtensions
         var assemblies = GetAllAssemblies();
         RegisterType<IProgramInfoDataSourceRepository>(assemblies, services);
         RegisterType<IProgramInfoDataSourceService>(assemblies, services);
+        RegisterType<IProgramInfoDataBackupSourceRepository>(assemblies, services);
+        RegisterType<IProgramInfoDataBackupSourceService>(assemblies, services);
         RegisterServiceCollectionRegister(assemblies, services);
 
         services.AddSingleton<IIconLoaderService, IconLoaderService>();
+        ImplementationLoadedEvent?.Invoke(services, new ImplementationLoadedEventArgs { LoadedInterface = typeof(IIconLoaderService), LoadedImplementation = typeof(IconLoaderService) });
+
         services.AddSingleton<IProgramInfoDataRepository, ProgramInfoDataRepository>();
+        ImplementationLoadedEvent?.Invoke(services, new ImplementationLoadedEventArgs { LoadedInterface = typeof(IProgramInfoDataRepository), LoadedImplementation = typeof(ProgramInfoDataRepository) });
+
         services.AddSingleton<IProgramInfoDataService, ProgramInfoDataService>();
+        ImplementationLoadedEvent?.Invoke(services, new ImplementationLoadedEventArgs { LoadedInterface = typeof(IProgramInfoDataService), LoadedImplementation = typeof(ProgramInfoDataService) });
 
         return services;
     }
@@ -137,7 +147,7 @@ public static class ServiceCollectionExtensions
         var implementations = GetImplementation<IServiceCollectionRegister>(assemblies);
         foreach (var implementation in implementations)
         {
-            implementation.RegisterServices(services);
+            implementation.RegisterServices(services, ImplementationLoadedEvent);
         }
     }
 
@@ -184,6 +194,7 @@ public static class ServiceCollectionExtensions
             foreach (var implementation in implementations)
             {
                 services.AddTransient(interfaceType, implementation);
+                ImplementationLoadedEvent?.Invoke(services, new ImplementationLoadedEventArgs { LoadedInterface = interfaceType, LoadedImplementation = implementation });
             }
         }
     }

@@ -29,6 +29,18 @@ public static partial class StringExtensions
     }
 
     /// <summary>
+    /// Removes invalid characters from a file name.
+    /// </summary>
+    /// <param name="fileName">The file name to sanitize.</param>
+    /// <returns>A sanitized file name.</returns>
+    public static string SanitizeFileName(this string fileName)
+    {
+        var invalidChars = new string(Path.GetInvalidFileNameChars());
+        var pattern = "[" + Regex.Escape(invalidChars) + "]";
+        return Regex.Replace(fileName, pattern, "_");
+    }
+
+    /// <summary>
     /// Checks if two strings are similar after removing certain characters and converting to lower case.
     /// </summary>
     /// <param name="string1">The first string to compare.</param>

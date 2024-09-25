@@ -2,8 +2,9 @@
   "metadata": [
     {
       "outputFormat": "markdown",
+      "categoryLayout": "none",
       "namespaceLayout": "nested",
-      "memberLayout": "separatePages",
+      "memberLayout": "samePage",
       "EnumSortOrder": "declaringOrder",
       "src": [
         {
@@ -30,6 +31,10 @@
         ]
       }
     ],
+    "sitemap": {
+      "baseUrl": "https://der-floh.github.io/Programs.Manager",
+      "changefreq": "monthly"
+    },
     "resource": [
       {
         "files": [
@@ -41,17 +46,18 @@
     "template": [
       "default",
       "modern",
-      "templates/singulinkfx"
+      "templates/material"
     ],
     "globalMetadata": {
       "homepage": "docs/introduction.md",
+      "pdf": false,
       "_appName": "Program-Infos-Manager",
+      "_appFooter": "<strong>Made with DocFX</strong>",
       "_appTitle": "Program-Infos-Manager",
       "_appLogoPath": "images/logo-x64.png",
       "_appFaviconPath": "images/favicon.ico",
-      "_appFooter": "<strong>Made with DocFX</strong>",
       "_enableSearch": true,
-      "pdf": false
+      "_disableContribution": true
     }
   }
 }

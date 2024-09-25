@@ -7,6 +7,11 @@ namespace ProgramInfos.Manager.Abstractions.Service;
 /// </summary>
 public interface IProgramInfoDataSourceService
 {
+    /// <summary>
+    /// Checks if the plugin is responsible for the given <see cref="IProgramInfoData"/>.
+    /// </summary>
+    /// <param name="programInfoData"></param>
+    /// <returns>True if the plugin is responsible, false otherwise.</returns>
     bool IsResponsible(IProgramInfoData programInfoData);
 
     /// <summary>

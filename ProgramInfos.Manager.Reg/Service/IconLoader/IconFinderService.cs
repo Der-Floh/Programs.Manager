@@ -10,21 +10,21 @@ public sealed class IconFinderService : IIconFinderService
     /// <inheritdoc/>
     public IIconInfo? GetIconInfo(IProgramInfoData iProgramInfoData)
     {
-        //if (!string.IsNullOrEmpty(programInfoData.DisplayName) && programInfoData.DisplayName.ToLower().Contains("7-zip"))
-        //{ }
-
         if (iProgramInfoData is not ProgramInfoData programInfoData)
             return null;
+
+        //if (!string.IsNullOrEmpty(programInfoData.DisplayName) && programInfoData.DisplayName.ToLower().Contains("goat"))
+        //{ }
 
         var iconInfo = new IconInfo();
 
         try
         {
-            if (!string.IsNullOrEmpty(programInfoData.DisplayIconInfo?.Path))
+            if (!string.IsNullOrEmpty(programInfoData.DisplayIcon))
             {
-                iconInfo = GetIconInfoFromPath(programInfoData.DisplayIconInfo.Path);
+                iconInfo = GetIconInfoFromPath(programInfoData.DisplayIcon);
                 iconInfo ??= new IconInfo();
-                iconInfo.Path = GetIconPathFromDisplayIconPath(programInfoData.DisplayIconInfo.Path);
+                iconInfo.Path = GetIconPathFromDisplayIconPath(programInfoData.DisplayIcon);
             }
             if (string.IsNullOrEmpty(iconInfo.Path) && !string.IsNullOrEmpty(programInfoData.DisplayName))
             {
@@ -166,14 +166,16 @@ public sealed class IconFinderService : IIconFinderService
 
     public static IconInfo? SplitIconIndex(string filePath)
     {
-        var index = filePath.LastIndexOf(',');
-        if (index == -1)
-            return null;
-
         var iconInfo = new IconInfo
         {
-            Path = filePath[..index]
+            Path = filePath,
         };
+
+        var index = filePath.LastIndexOf(',');
+        if (index == -1)
+            return iconInfo;
+
+        iconInfo.Path = filePath[..index];
         var success = int.TryParse(filePath.AsSpan(index + 1), out var parsedIndex);
         if (success)
         {
